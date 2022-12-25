@@ -6,6 +6,7 @@ import com.epp.pojo.BranchPower;
 
 import java.util.List;
 
+import com.epp.pojo.HourlyPower;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
@@ -33,6 +34,9 @@ public interface BranchPowerMapper {
             "    where branch_power_id = #{branchPowerId,jdbcType=INTEGER}")
     BranchPower selectByPrimaryKey(Integer branchPowerId);
 
+
+    @Select("select * from branch_power where year like CONCAT('%',#{year},'%')")
+    IPage<BranchPower> selectAll(Page page, Integer year, Integer month, Integer day);
 
     @Select("select * from branch_power")
     List<BranchPower> selectAll();

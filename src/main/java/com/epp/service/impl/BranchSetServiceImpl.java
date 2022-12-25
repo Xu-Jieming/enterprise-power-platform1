@@ -5,10 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.epp.mapper.BranchSetMapper;
 import com.epp.pojo.ApiResult;
 import com.epp.pojo.BranchSet;
-import com.epp.pojo.BranchSet;
+
 import com.epp.service.BranchSetService;
 import com.epp.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -17,7 +18,9 @@ import java.util.List;
  * @Author: Xu jieming
  * @Date: 2022/12/25/15:23
  * @Description: 
- */public class BranchSetServiceImpl implements BranchSetService {
+ */
+@Service
+public class BranchSetServiceImpl implements BranchSetService {
     @Autowired
     private BranchSetMapper mapper;
 

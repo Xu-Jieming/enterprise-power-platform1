@@ -2,13 +2,16 @@ package com.epp.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.epp.mapper.BranchSetMapper;
 import com.epp.mapper.HourlyPowerMapper;
 import com.epp.pojo.Admin;
 import com.epp.pojo.ApiResult;
+import com.epp.pojo.BranchSet;
 import com.epp.pojo.HourlyPower;
 import com.epp.service.HourlyPowerService;
 import com.epp.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.List;
@@ -20,13 +23,14 @@ import java.util.List;
  * @Date: 2022/12/25/11:54
  * @Description:
  */
+@Service
 public class HourlyPowerServiceImpl implements HourlyPowerService {
 
     @Autowired
     private HourlyPowerMapper mapper;
 
     @Autowired
-
+    private BranchSetMapper branchSetMapper;
 
     Calendar ca = Calendar.getInstance();
 
@@ -68,8 +72,37 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
     }
 
     @Override
-    public ApiResult update(HourlyPower hourlyPower) {
+    public ApiResult update(HourlyPower hourlyPower,Integer enterpriseId) {
+
+        int day =ca.get(Calendar.DAY_OF_YEAR);//一年中的第几天
+        int month =ca.get(Calendar.MONTH);//第几个月
+        int year =ca.get(Calendar.YEAR);//年份数值
+        hourlyPower.setTime(year,month,day);
+
+        hourlyPower.setEnterpriseId(enterpriseId);
+
         int updateHourlyPower = mapper.updateByPrimaryKey(hourlyPower);
+
+        BranchSet branchSet = branchSetMapper.selectByEnterpriseId(enterpriseId);//获取当前的支路设定
+
+        if(hourlyPower.getBranchSet() == 1 && branchSet.getFirstBranchSet() != 1) {
+
+            return ApiResultHandler.buildApiResult(1000, "第一支路没有开启", updateHourlyPower);
+
+        }else if(hourlyPower.getBranchSet() == 2 && branchSet.getSecondBranchSet() != 1){
+
+            return ApiResultHandler.buildApiResult(1000, "第二支路没有开启", updateHourlyPower);
+
+        }else if(hourlyPower.getBranchSet() == 3 && branchSet.getThirdBranchSet() != 1){
+
+            return ApiResultHandler.buildApiResult(1000, "第三支路没有开启", updateHourlyPower);
+
+        }else if(hourlyPower.getBranchSet() == 4 && branchSet.getForthBranchSet() != 1){
+
+            return ApiResultHandler.buildApiResult(1000, "第四支路没有开启", updateHourlyPower);
+
+        }
+
         if(updateHourlyPower != 0){
             return ApiResultHandler.buildApiResult(200, "修改成功", updateHourlyPower);
         }
@@ -87,6 +120,27 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
         hourlyPower.setEnterpriseId(enterpriseId);
 
         int insertHourlyPower = mapper.insert(hourlyPower);
+
+        BranchSet branchSet = branchSetMapper.selectByEnterpriseId(enterpriseId);//获取当前的支路设定
+
+        if(hourlyPower.getBranchSet() == 1 && branchSet.getFirstBranchSet() != 1) {
+
+            return ApiResultHandler.buildApiResult(1000, "第一支路没有开启", insertHourlyPower);
+
+        }else if(hourlyPower.getBranchSet() == 2 && branchSet.getSecondBranchSet() != 1){
+
+            return ApiResultHandler.buildApiResult(1000, "第二支路没有开启", insertHourlyPower);
+
+        }else if(hourlyPower.getBranchSet() == 3 && branchSet.getThirdBranchSet() != 1){
+
+            return ApiResultHandler.buildApiResult(1000, "第三支路没有开启", insertHourlyPower);
+
+        }else if(hourlyPower.getBranchSet() == 4 && branchSet.getForthBranchSet() != 1){
+
+            return ApiResultHandler.buildApiResult(1000, "第四支路没有开启", insertHourlyPower);
+
+        }
+
         if(insertHourlyPower != 0){
             return ApiResultHandler.buildApiResult(200, "添加成功", insertHourlyPower);
         }

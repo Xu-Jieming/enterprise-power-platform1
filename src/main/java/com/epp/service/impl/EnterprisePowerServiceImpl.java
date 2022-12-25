@@ -9,6 +9,7 @@ import com.epp.pojo.EnterprisePower;
 import com.epp.service.EnterprisePowerService;
 import com.epp.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * @Date: 2022/12/25/14:08
  * @Description:
  */
+@Service
 public class EnterprisePowerServiceImpl implements EnterprisePowerService {
     
     @Autowired

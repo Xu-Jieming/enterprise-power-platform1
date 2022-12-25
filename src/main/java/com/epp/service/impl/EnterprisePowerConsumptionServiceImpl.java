@@ -18,6 +18,7 @@ import java.util.List;
  * @Description:
  */
 @Service
+
 public class EnterprisePowerConsumptionServiceImpl implements EnterprisePowerConsumptionService {
 
 /*    @Autowired

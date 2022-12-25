@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@Service
 public class TiredRateServiceImpl implements TiredRateService {
 
     @Autowired

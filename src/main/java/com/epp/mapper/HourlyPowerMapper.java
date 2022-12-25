@@ -41,6 +41,7 @@ public interface HourlyPowerMapper {
     IPage<HourlyPower> selectAll(Page page);
 
 
+
     ////int updateByExampleSelective(@Param("record") HourlyPower record, @Param("example") HourlyPowerExample example);
 
     //int updateByExample(@Param("record") HourlyPower record, @Param("example") HourlyPowerExample example);

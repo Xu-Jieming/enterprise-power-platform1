@@ -11,6 +11,7 @@ import com.epp.pojo.BranchPower;
 import com.epp.service.BranchPowerService;
 import com.epp.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
  * @Date: 2022/12/25/13:49
  * @Description:
  */
+@Service
 public class BranchPowerServiceImpl implements BranchPowerService {
 
     @Autowired
@@ -91,6 +93,9 @@ public class BranchPowerServiceImpl implements BranchPowerService {
 
     @Override
     public ApiResult insert(BranchPower branchPower) {
+
+
+
         int insertBranchPower = mapper.insert(branchPower);
         if(insertBranchPower != 0){
             return ApiResultHandler.buildApiResult(200, "添加成功", insertBranchPower);

@@ -22,7 +22,7 @@ public interface HourlyPowerService {
 
     public ApiResult deleteByPrimaryKey(Integer hourlyId);
 
-    public ApiResult update(HourlyPower hourlyPower);
+    public ApiResult update(HourlyPower hourlyPower,Integer enterpriseId);
 
     public ApiResult insert(HourlyPower hourlyPower,Integer enterpriseId);
 

@@ -6,6 +6,7 @@ import com.epp.pojo.ApiResult;
 import com.epp.service.AdminService;
 import com.epp.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @Date: 2022/12/25/9:51
  * @Description:
  */
+@Service
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
