@@ -2,7 +2,6 @@ package com.epp.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.epp.pojo.ApiResult;
-import com.epp.pojo.EnterprisePowerConsumption;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +12,7 @@ import com.epp.pojo.EnterprisePowerConsumption;
  */
 public interface EnterprisePowerConsumptionService {
 
-    ApiResult<EnterprisePowerConsumption> findAll();
+/*    ApiResult<EnterprisePowerConsumption> findAll();
 
     ApiResult<EnterprisePowerConsumption> findAll(Page<EnterprisePowerConsumption> page);
 
@@ -25,7 +24,7 @@ public interface EnterprisePowerConsumptionService {
 
     ApiResult update(EnterprisePowerConsumption consumption);
 
-    ApiResult add(EnterprisePowerConsumption consumption);
+    ApiResult add(EnterprisePowerConsumption consumption);*/
 
 
 }

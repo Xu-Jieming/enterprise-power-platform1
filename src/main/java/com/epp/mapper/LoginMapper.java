@@ -1,10 +1,11 @@
 package com.epp.mapper;
 
 import com.epp.pojo.Admin;
-import com.epp.pojo.Enterprise;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+
 
 @Mapper
 public interface LoginMapper {
@@ -12,6 +13,5 @@ public interface LoginMapper {
     @Select("select admin_id,admin_name,tel,email,account,role from admin where account = #{account} and password = #{password}")
     public Admin adminLogin(@Param("account") String account, @Param("password") String password);
 
-    @Select("select enterprise_id,enterprise_name,tel,email,account,role from enterprise where account = #{account} and password = #{password}")
-    public Enterprise enterpriseLogin(@Param("account")String account, @Param("password")String password);
+
 }

@@ -1,60 +1,34 @@
 package com.epp.pojo;
 
-
+import lombok.Data;
+@Data
 public class Enterprise {
-
     private Integer enterpriseId;
 
-    private String enterpriseName;
-
-    private String tel;
+    private String name;
 
     private String email;
 
-    private String password;
+    private Integer tel;
 
-    private String account;
+    private Integer account;
 
-    private Integer role;
+    private String introdution;
 
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(Integer role) {
-        this.role = role;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public Integer getenterpriseId() {
+    public Integer getEnterpriseId() {
         return enterpriseId;
     }
 
-    public void setenterpriseId(Integer enterpriseId) {
+    public void setEnterpriseId(Integer enterpriseId) {
         this.enterpriseId = enterpriseId;
     }
 
-    public String getenterpriseName() {
-        return enterpriseName;
+    public String getName() {
+        return name;
     }
 
-    public void setenterpriseName(String enterpriseName) {
-        this.enterpriseName = enterpriseName;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getEmail() {
@@ -62,16 +36,30 @@ public class Enterprise {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email == null ? null : email.trim();
     }
 
-    public String getPassword() {
-        return password;
+    public Integer getTel() {
+        return tel;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTel(Integer tel) {
+        this.tel = tel;
     }
 
+    public Integer getAccount() {
+        return account;
+    }
 
+    public void setAccount(Integer account) {
+        this.account = account;
+    }
+
+    public String getIntrodution() {
+        return introdution;
+    }
+
+    public void setIntrodution(String introdution) {
+        this.introdution = introdution == null ? null : introdution.trim();
+    }
 }

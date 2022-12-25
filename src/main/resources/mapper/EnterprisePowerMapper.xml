@@ -1,0 +1,1726 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.epp.mapper.EnterprisePowerMapper">
+  <resultMap id="BaseResultMap" type="com.epp.pojo.EnterprisePower">
+    <id column="enterprise_power_id" jdbcType="INTEGER" property="enterprisePowerId" />
+    <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+    <result column="enterprise_account" jdbcType="INTEGER" property="enterpriseAccount" />
+    <result column="first_period_power" jdbcType="VARCHAR" property="firstPeriodPower" />
+    <result column="second_period_power" jdbcType="VARCHAR" property="secondPeriodPower" />
+    <result column="third_period_power" jdbcType="VARCHAR" property="thirdPeriodPower" />
+    <result column="forth_period_power" jdbcType="VARCHAR" property="forthPeriodPower" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="day" jdbcType="INTEGER" property="day" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    enterprise_power_id, enterprise_id, enterprise_account, first_period_power, second_period_power, 
+    third_period_power, forth_period_power, year, month, day
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.EnterprisePowerExample">
+    delete from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power (enterprise_id, enterprise_account, 
+      first_period_power, second_period_power, third_period_power, 
+      forth_period_power, year, month, 
+      day)
+    values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseAccount,jdbcType=INTEGER}, 
+      #{firstPeriodPower,jdbcType=VARCHAR}, #{secondPeriodPower,jdbcType=VARCHAR}, #{thirdPeriodPower,jdbcType=VARCHAR}, 
+      #{forthPeriodPower,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{day,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        enterprise_id,
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account,
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power,
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power,
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power,
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="day != null">
+        day,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        #{day,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultType="java.lang.Long">
+    select count(*) from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enterprise_power
+    <set>
+      <if test="record.enterprisePowerId != null">
+        enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null">
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseAccount != null">
+        enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstPeriodPower != null">
+        first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondPeriodPower != null">
+        second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdPeriodPower != null">
+        third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forthPeriodPower != null">
+        forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.day != null">
+        day = #{record.day,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enterprise_power
+    set enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      day = #{record.day,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    <set>
+      <if test="enterpriseId != null">
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        day = #{day,jdbcType=INTEGER},
+      </if>
+    </set>
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    set enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      day = #{day,jdbcType=INTEGER}
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.epp.pojo.EnterprisePower">
+    <id column="enterprise_power_id" jdbcType="INTEGER" property="enterprisePowerId" />
+    <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+    <result column="enterprise_account" jdbcType="INTEGER" property="enterpriseAccount" />
+    <result column="first_period_power" jdbcType="VARCHAR" property="firstPeriodPower" />
+    <result column="second_period_power" jdbcType="VARCHAR" property="secondPeriodPower" />
+    <result column="third_period_power" jdbcType="VARCHAR" property="thirdPeriodPower" />
+    <result column="forth_period_power" jdbcType="VARCHAR" property="forthPeriodPower" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="day" jdbcType="INTEGER" property="day" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    enterprise_power_id, enterprise_id, enterprise_account, first_period_power, second_period_power, 
+    third_period_power, forth_period_power, year, month, day
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.EnterprisePowerExample">
+    delete from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power (enterprise_id, enterprise_account, 
+      first_period_power, second_period_power, third_period_power, 
+      forth_period_power, year, month, 
+      day)
+    values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseAccount,jdbcType=INTEGER}, 
+      #{firstPeriodPower,jdbcType=VARCHAR}, #{secondPeriodPower,jdbcType=VARCHAR}, #{thirdPeriodPower,jdbcType=VARCHAR}, 
+      #{forthPeriodPower,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{day,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        enterprise_id,
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account,
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power,
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power,
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power,
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="day != null">
+        day,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        #{day,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultType="java.lang.Long">
+    select count(*) from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enterprise_power
+    <set>
+      <if test="record.enterprisePowerId != null">
+        enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null">
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseAccount != null">
+        enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstPeriodPower != null">
+        first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondPeriodPower != null">
+        second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdPeriodPower != null">
+        third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forthPeriodPower != null">
+        forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.day != null">
+        day = #{record.day,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enterprise_power
+    set enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      day = #{record.day,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    <set>
+      <if test="enterpriseId != null">
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        day = #{day,jdbcType=INTEGER},
+      </if>
+    </set>
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    set enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      day = #{day,jdbcType=INTEGER}
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.epp.pojo.EnterprisePower">
+    <id column="enterprise_power_id" jdbcType="INTEGER" property="enterprisePowerId" />
+    <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+    <result column="enterprise_account" jdbcType="INTEGER" property="enterpriseAccount" />
+    <result column="first_period_power" jdbcType="VARCHAR" property="firstPeriodPower" />
+    <result column="second_period_power" jdbcType="VARCHAR" property="secondPeriodPower" />
+    <result column="third_period_power" jdbcType="VARCHAR" property="thirdPeriodPower" />
+    <result column="forth_period_power" jdbcType="VARCHAR" property="forthPeriodPower" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="day" jdbcType="INTEGER" property="day" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    enterprise_power_id, enterprise_id, enterprise_account, first_period_power, second_period_power, 
+    third_period_power, forth_period_power, year, month, day
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.EnterprisePowerExample">
+    delete from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power (enterprise_id, enterprise_account, 
+      first_period_power, second_period_power, third_period_power, 
+      forth_period_power, year, month, 
+      day)
+    values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseAccount,jdbcType=INTEGER}, 
+      #{firstPeriodPower,jdbcType=VARCHAR}, #{secondPeriodPower,jdbcType=VARCHAR}, #{thirdPeriodPower,jdbcType=VARCHAR}, 
+      #{forthPeriodPower,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{day,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        enterprise_id,
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account,
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power,
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power,
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power,
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="day != null">
+        day,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        #{day,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultType="java.lang.Long">
+    select count(*) from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enterprise_power
+    <set>
+      <if test="record.enterprisePowerId != null">
+        enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null">
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseAccount != null">
+        enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstPeriodPower != null">
+        first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondPeriodPower != null">
+        second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdPeriodPower != null">
+        third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forthPeriodPower != null">
+        forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.day != null">
+        day = #{record.day,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enterprise_power
+    set enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      day = #{record.day,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    <set>
+      <if test="enterpriseId != null">
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        day = #{day,jdbcType=INTEGER},
+      </if>
+    </set>
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    set enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      day = #{day,jdbcType=INTEGER}
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.epp.pojo.EnterprisePower">
+    <id column="enterprise_power_id" jdbcType="INTEGER" property="enterprisePowerId" />
+    <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+    <result column="enterprise_account" jdbcType="INTEGER" property="enterpriseAccount" />
+    <result column="first_period_power" jdbcType="VARCHAR" property="firstPeriodPower" />
+    <result column="second_period_power" jdbcType="VARCHAR" property="secondPeriodPower" />
+    <result column="third_period_power" jdbcType="VARCHAR" property="thirdPeriodPower" />
+    <result column="forth_period_power" jdbcType="VARCHAR" property="forthPeriodPower" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="day" jdbcType="INTEGER" property="day" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    enterprise_power_id, enterprise_id, enterprise_account, first_period_power, second_period_power, 
+    third_period_power, forth_period_power, year, month, day
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.EnterprisePowerExample">
+    delete from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power (enterprise_id, enterprise_account, 
+      first_period_power, second_period_power, third_period_power, 
+      forth_period_power, year, month, 
+      day)
+    values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseAccount,jdbcType=INTEGER}, 
+      #{firstPeriodPower,jdbcType=VARCHAR}, #{secondPeriodPower,jdbcType=VARCHAR}, #{thirdPeriodPower,jdbcType=VARCHAR}, 
+      #{forthPeriodPower,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{day,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        enterprise_id,
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account,
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power,
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power,
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power,
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="day != null">
+        day,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        #{day,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultType="java.lang.Long">
+    select count(*) from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enterprise_power
+    <set>
+      <if test="record.enterprisePowerId != null">
+        enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null">
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseAccount != null">
+        enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstPeriodPower != null">
+        first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondPeriodPower != null">
+        second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdPeriodPower != null">
+        third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forthPeriodPower != null">
+        forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.day != null">
+        day = #{record.day,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enterprise_power
+    set enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      day = #{record.day,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    <set>
+      <if test="enterpriseId != null">
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        day = #{day,jdbcType=INTEGER},
+      </if>
+    </set>
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    set enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      day = #{day,jdbcType=INTEGER}
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.epp.pojo.EnterprisePower">
+    <id column="enterprise_power_id" jdbcType="INTEGER" property="enterprisePowerId" />
+    <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+    <result column="enterprise_account" jdbcType="INTEGER" property="enterpriseAccount" />
+    <result column="first_period_power" jdbcType="VARCHAR" property="firstPeriodPower" />
+    <result column="second_period_power" jdbcType="VARCHAR" property="secondPeriodPower" />
+    <result column="third_period_power" jdbcType="VARCHAR" property="thirdPeriodPower" />
+    <result column="forth_period_power" jdbcType="VARCHAR" property="forthPeriodPower" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="day" jdbcType="INTEGER" property="day" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    enterprise_power_id, enterprise_id, enterprise_account, first_period_power, second_period_power, 
+    third_period_power, forth_period_power, year, month, day
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.EnterprisePowerExample">
+    delete from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power (enterprise_id, enterprise_account, 
+      first_period_power, second_period_power, third_period_power, 
+      forth_period_power, year, month, 
+      day)
+    values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseAccount,jdbcType=INTEGER}, 
+      #{firstPeriodPower,jdbcType=VARCHAR}, #{secondPeriodPower,jdbcType=VARCHAR}, #{thirdPeriodPower,jdbcType=VARCHAR}, 
+      #{forthPeriodPower,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{day,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        enterprise_id,
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account,
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power,
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power,
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power,
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="day != null">
+        day,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        #{day,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultType="java.lang.Long">
+    select count(*) from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enterprise_power
+    <set>
+      <if test="record.enterprisePowerId != null">
+        enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null">
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseAccount != null">
+        enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstPeriodPower != null">
+        first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondPeriodPower != null">
+        second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdPeriodPower != null">
+        third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forthPeriodPower != null">
+        forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.day != null">
+        day = #{record.day,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enterprise_power
+    set enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      day = #{record.day,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    <set>
+      <if test="enterpriseId != null">
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        day = #{day,jdbcType=INTEGER},
+      </if>
+    </set>
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    set enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      day = #{day,jdbcType=INTEGER}
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.epp.pojo.EnterprisePower">
+    <id column="enterprise_power_id" jdbcType="INTEGER" property="enterprisePowerId" />
+    <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+    <result column="enterprise_account" jdbcType="INTEGER" property="enterpriseAccount" />
+    <result column="first_period_power" jdbcType="VARCHAR" property="firstPeriodPower" />
+    <result column="second_period_power" jdbcType="VARCHAR" property="secondPeriodPower" />
+    <result column="third_period_power" jdbcType="VARCHAR" property="thirdPeriodPower" />
+    <result column="forth_period_power" jdbcType="VARCHAR" property="forthPeriodPower" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="day" jdbcType="INTEGER" property="day" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    enterprise_power_id, enterprise_id, enterprise_account, first_period_power, second_period_power, 
+    third_period_power, forth_period_power, year, month, day
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from enterprise_power
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.EnterprisePowerExample">
+    delete from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power (enterprise_id, enterprise_account, 
+      first_period_power, second_period_power, third_period_power, 
+      forth_period_power, year, month, 
+      day)
+    values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseAccount,jdbcType=INTEGER}, 
+      #{firstPeriodPower,jdbcType=VARCHAR}, #{secondPeriodPower,jdbcType=VARCHAR}, #{thirdPeriodPower,jdbcType=VARCHAR}, 
+      #{forthPeriodPower,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{day,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.EnterprisePower">
+    <selectKey keyProperty="enterprisePowerId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise_power
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        enterprise_id,
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account,
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power,
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power,
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power,
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="day != null">
+        day,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enterpriseId != null">
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        #{day,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.EnterprisePowerExample" resultType="java.lang.Long">
+    select count(*) from enterprise_power
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update enterprise_power
+    <set>
+      <if test="record.enterprisePowerId != null">
+        enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null">
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseAccount != null">
+        enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstPeriodPower != null">
+        first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondPeriodPower != null">
+        second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdPeriodPower != null">
+        third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forthPeriodPower != null">
+        forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.day != null">
+        day = #{record.day,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update enterprise_power
+    set enterprise_power_id = #{record.enterprisePowerId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{record.enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{record.firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{record.secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{record.thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{record.forthPeriodPower,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      day = #{record.day,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    <set>
+      <if test="enterpriseId != null">
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseAccount != null">
+        enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      </if>
+      <if test="firstPeriodPower != null">
+        first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPeriodPower != null">
+        second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPeriodPower != null">
+        third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="forthPeriodPower != null">
+        forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null">
+        day = #{day,jdbcType=INTEGER},
+      </if>
+    </set>
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.EnterprisePower">
+    update enterprise_power
+    set enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      enterprise_account = #{enterpriseAccount,jdbcType=INTEGER},
+      first_period_power = #{firstPeriodPower,jdbcType=VARCHAR},
+      second_period_power = #{secondPeriodPower,jdbcType=VARCHAR},
+      third_period_power = #{thirdPeriodPower,jdbcType=VARCHAR},
+      forth_period_power = #{forthPeriodPower,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      day = #{day,jdbcType=INTEGER}
+    where enterprise_power_id = #{enterprisePowerId,jdbcType=INTEGER}
+  </update>
+</mapper>

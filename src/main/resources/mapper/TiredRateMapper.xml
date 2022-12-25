@@ -1,0 +1,1583 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.epp.mapper.TiredRateMapper">
+  <resultMap id="BaseResultMap" type="com.epp.pojo.TiredRate">
+    <id column="rate_id" jdbcType="INTEGER" property="rateId" />
+    <result column="first_rate_interval" jdbcType="INTEGER" property="firstRateInterval" />
+    <result column="second_rate_interval" jdbcType="INTEGER" property="secondRateInterval" />
+    <result column="third_rate_interval" jdbcType="INTEGER" property="thirdRateInterval" />
+    <result column="first_tired_rate" jdbcType="DOUBLE" property="firstTiredRate" />
+    <result column="second_tired_rate" jdbcType="DOUBLE" property="secondTiredRate" />
+    <result column="third_tired_rate" jdbcType="DOUBLE" property="thirdTiredRate" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="first_rate_content" jdbcType="VARCHAR" property="firstRateContent" />
+    <result column="second_rate_content" jdbcType="VARCHAR" property="secondRateContent" />
+    <result column="third_rate_content" jdbcType="VARCHAR" property="thirdRateContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rate_id, first_rate_interval, second_rate_interval, third_rate_interval, first_tired_rate, 
+    second_tired_rate, third_tired_rate, year, month, comment, first_rate_content, second_rate_content, 
+    third_rate_content
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.TiredRateExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.TiredRateExample">
+    delete from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate (first_rate_interval, second_rate_interval, 
+      third_rate_interval, first_tired_rate, second_tired_rate, 
+      third_tired_rate, year, month, 
+      comment, first_rate_content, second_rate_content, 
+      third_rate_content)
+    values (#{firstRateInterval,jdbcType=INTEGER}, #{secondRateInterval,jdbcType=INTEGER}, 
+      #{thirdRateInterval,jdbcType=INTEGER}, #{firstTiredRate,jdbcType=DOUBLE}, #{secondTiredRate,jdbcType=DOUBLE}, 
+      #{thirdTiredRate,jdbcType=DOUBLE}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR}, #{firstRateContent,jdbcType=VARCHAR}, #{secondRateContent,jdbcType=VARCHAR}, 
+      #{thirdRateContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        first_rate_interval,
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval,
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval,
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate,
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate,
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="firstRateContent != null">
+        first_rate_content,
+      </if>
+      <if test="secondRateContent != null">
+        second_rate_content,
+      </if>
+      <if test="thirdRateContent != null">
+        third_rate_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        #{firstRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="secondRateInterval != null">
+        #{secondRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="thirdRateInterval != null">
+        #{thirdRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="firstTiredRate != null">
+        #{firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="secondTiredRate != null">
+        #{secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdTiredRate != null">
+        #{thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="firstRateContent != null">
+        #{firstRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateContent != null">
+        #{secondRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateContent != null">
+        #{thirdRateContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.TiredRateExample" resultType="java.lang.Long">
+    select count(*) from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tired_rate
+    <set>
+      <if test="record.rateId != null">
+        rate_id = #{record.rateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstRateInterval != null">
+        first_rate_interval = #{record.firstRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.secondRateInterval != null">
+        second_rate_interval = #{record.secondRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.thirdRateInterval != null">
+        third_rate_interval = #{record.thirdRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstTiredRate != null">
+        first_tired_rate = #{record.firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.secondTiredRate != null">
+        second_tired_rate = #{record.secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.thirdTiredRate != null">
+        third_tired_rate = #{record.thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstRateContent != null">
+        first_rate_content = #{record.firstRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondRateContent != null">
+        second_rate_content = #{record.secondRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdRateContent != null">
+        third_rate_content = #{record.thirdRateContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tired_rate
+    set rate_id = #{record.rateId,jdbcType=INTEGER},
+      first_rate_interval = #{record.firstRateInterval,jdbcType=INTEGER},
+      second_rate_interval = #{record.secondRateInterval,jdbcType=INTEGER},
+      third_rate_interval = #{record.thirdRateInterval,jdbcType=INTEGER},
+      first_tired_rate = #{record.firstTiredRate,jdbcType=DOUBLE},
+      second_tired_rate = #{record.secondTiredRate,jdbcType=DOUBLE},
+      third_tired_rate = #{record.thirdTiredRate,jdbcType=DOUBLE},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      first_rate_content = #{record.firstRateContent,jdbcType=VARCHAR},
+      second_rate_content = #{record.secondRateContent,jdbcType=VARCHAR},
+      third_rate_content = #{record.thirdRateContent,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    <set>
+      <if test="firstRateInterval != null">
+        first_rate_interval = #{firstRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval = #{secondRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval = #{thirdRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate = #{firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate = #{secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate = #{thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="firstRateContent != null">
+        first_rate_content = #{firstRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateContent != null">
+        second_rate_content = #{secondRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateContent != null">
+        third_rate_content = #{thirdRateContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    set first_rate_interval = #{firstRateInterval,jdbcType=INTEGER},
+      second_rate_interval = #{secondRateInterval,jdbcType=INTEGER},
+      third_rate_interval = #{thirdRateInterval,jdbcType=INTEGER},
+      first_tired_rate = #{firstTiredRate,jdbcType=DOUBLE},
+      second_tired_rate = #{secondTiredRate,jdbcType=DOUBLE},
+      third_tired_rate = #{thirdTiredRate,jdbcType=DOUBLE},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      first_rate_content = #{firstRateContent,jdbcType=VARCHAR},
+      second_rate_content = #{secondRateContent,jdbcType=VARCHAR},
+      third_rate_content = #{thirdRateContent,jdbcType=VARCHAR}
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.epp.pojo.TiredRate">
+    <id column="rate_id" jdbcType="INTEGER" property="rateId" />
+    <result column="first_rate_interval" jdbcType="INTEGER" property="firstRateInterval" />
+    <result column="second_rate_interval" jdbcType="INTEGER" property="secondRateInterval" />
+    <result column="third_rate_interval" jdbcType="INTEGER" property="thirdRateInterval" />
+    <result column="first_tired_rate" jdbcType="DOUBLE" property="firstTiredRate" />
+    <result column="second_tired_rate" jdbcType="DOUBLE" property="secondTiredRate" />
+    <result column="third_tired_rate" jdbcType="DOUBLE" property="thirdTiredRate" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="first_rate_content" jdbcType="VARCHAR" property="firstRateContent" />
+    <result column="second_rate_content" jdbcType="VARCHAR" property="secondRateContent" />
+    <result column="third_rate_content" jdbcType="VARCHAR" property="thirdRateContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rate_id, first_rate_interval, second_rate_interval, third_rate_interval, first_tired_rate, 
+    second_tired_rate, third_tired_rate, year, month, comment, first_rate_content, second_rate_content, 
+    third_rate_content
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.TiredRateExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.TiredRateExample">
+    delete from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate (first_rate_interval, second_rate_interval, 
+      third_rate_interval, first_tired_rate, second_tired_rate, 
+      third_tired_rate, year, month, 
+      comment, first_rate_content, second_rate_content, 
+      third_rate_content)
+    values (#{firstRateInterval,jdbcType=INTEGER}, #{secondRateInterval,jdbcType=INTEGER}, 
+      #{thirdRateInterval,jdbcType=INTEGER}, #{firstTiredRate,jdbcType=DOUBLE}, #{secondTiredRate,jdbcType=DOUBLE}, 
+      #{thirdTiredRate,jdbcType=DOUBLE}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR}, #{firstRateContent,jdbcType=VARCHAR}, #{secondRateContent,jdbcType=VARCHAR}, 
+      #{thirdRateContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        first_rate_interval,
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval,
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval,
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate,
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate,
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="firstRateContent != null">
+        first_rate_content,
+      </if>
+      <if test="secondRateContent != null">
+        second_rate_content,
+      </if>
+      <if test="thirdRateContent != null">
+        third_rate_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        #{firstRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="secondRateInterval != null">
+        #{secondRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="thirdRateInterval != null">
+        #{thirdRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="firstTiredRate != null">
+        #{firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="secondTiredRate != null">
+        #{secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdTiredRate != null">
+        #{thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="firstRateContent != null">
+        #{firstRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateContent != null">
+        #{secondRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateContent != null">
+        #{thirdRateContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.TiredRateExample" resultType="java.lang.Long">
+    select count(*) from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tired_rate
+    <set>
+      <if test="record.rateId != null">
+        rate_id = #{record.rateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstRateInterval != null">
+        first_rate_interval = #{record.firstRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.secondRateInterval != null">
+        second_rate_interval = #{record.secondRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.thirdRateInterval != null">
+        third_rate_interval = #{record.thirdRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstTiredRate != null">
+        first_tired_rate = #{record.firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.secondTiredRate != null">
+        second_tired_rate = #{record.secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.thirdTiredRate != null">
+        third_tired_rate = #{record.thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstRateContent != null">
+        first_rate_content = #{record.firstRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondRateContent != null">
+        second_rate_content = #{record.secondRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdRateContent != null">
+        third_rate_content = #{record.thirdRateContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tired_rate
+    set rate_id = #{record.rateId,jdbcType=INTEGER},
+      first_rate_interval = #{record.firstRateInterval,jdbcType=INTEGER},
+      second_rate_interval = #{record.secondRateInterval,jdbcType=INTEGER},
+      third_rate_interval = #{record.thirdRateInterval,jdbcType=INTEGER},
+      first_tired_rate = #{record.firstTiredRate,jdbcType=DOUBLE},
+      second_tired_rate = #{record.secondTiredRate,jdbcType=DOUBLE},
+      third_tired_rate = #{record.thirdTiredRate,jdbcType=DOUBLE},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      first_rate_content = #{record.firstRateContent,jdbcType=VARCHAR},
+      second_rate_content = #{record.secondRateContent,jdbcType=VARCHAR},
+      third_rate_content = #{record.thirdRateContent,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    <set>
+      <if test="firstRateInterval != null">
+        first_rate_interval = #{firstRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval = #{secondRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval = #{thirdRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate = #{firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate = #{secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate = #{thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="firstRateContent != null">
+        first_rate_content = #{firstRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateContent != null">
+        second_rate_content = #{secondRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateContent != null">
+        third_rate_content = #{thirdRateContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    set first_rate_interval = #{firstRateInterval,jdbcType=INTEGER},
+      second_rate_interval = #{secondRateInterval,jdbcType=INTEGER},
+      third_rate_interval = #{thirdRateInterval,jdbcType=INTEGER},
+      first_tired_rate = #{firstTiredRate,jdbcType=DOUBLE},
+      second_tired_rate = #{secondTiredRate,jdbcType=DOUBLE},
+      third_tired_rate = #{thirdTiredRate,jdbcType=DOUBLE},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      first_rate_content = #{firstRateContent,jdbcType=VARCHAR},
+      second_rate_content = #{secondRateContent,jdbcType=VARCHAR},
+      third_rate_content = #{thirdRateContent,jdbcType=VARCHAR}
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.epp.pojo.TiredRate">
+    <id column="rate_id" jdbcType="INTEGER" property="rateId" />
+    <result column="first_rate_interval" jdbcType="INTEGER" property="firstRateInterval" />
+    <result column="second_rate_interval" jdbcType="INTEGER" property="secondRateInterval" />
+    <result column="third_rate_interval" jdbcType="INTEGER" property="thirdRateInterval" />
+    <result column="first_tired_rate" jdbcType="DOUBLE" property="firstTiredRate" />
+    <result column="second_tired_rate" jdbcType="DOUBLE" property="secondTiredRate" />
+    <result column="third_tired_rate" jdbcType="DOUBLE" property="thirdTiredRate" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="first_rate_content" jdbcType="VARCHAR" property="firstRateContent" />
+    <result column="second_rate_content" jdbcType="VARCHAR" property="secondRateContent" />
+    <result column="third_rate_content" jdbcType="VARCHAR" property="thirdRateContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rate_id, first_rate_interval, second_rate_interval, third_rate_interval, first_tired_rate, 
+    second_tired_rate, third_tired_rate, year, month, comment, first_rate_content, second_rate_content, 
+    third_rate_content
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.TiredRateExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.TiredRateExample">
+    delete from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate (first_rate_interval, second_rate_interval, 
+      third_rate_interval, first_tired_rate, second_tired_rate, 
+      third_tired_rate, year, month, 
+      comment, first_rate_content, second_rate_content, 
+      third_rate_content)
+    values (#{firstRateInterval,jdbcType=INTEGER}, #{secondRateInterval,jdbcType=INTEGER}, 
+      #{thirdRateInterval,jdbcType=INTEGER}, #{firstTiredRate,jdbcType=DOUBLE}, #{secondTiredRate,jdbcType=DOUBLE}, 
+      #{thirdTiredRate,jdbcType=DOUBLE}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR}, #{firstRateContent,jdbcType=VARCHAR}, #{secondRateContent,jdbcType=VARCHAR}, 
+      #{thirdRateContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        first_rate_interval,
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval,
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval,
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate,
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate,
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="firstRateContent != null">
+        first_rate_content,
+      </if>
+      <if test="secondRateContent != null">
+        second_rate_content,
+      </if>
+      <if test="thirdRateContent != null">
+        third_rate_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        #{firstRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="secondRateInterval != null">
+        #{secondRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="thirdRateInterval != null">
+        #{thirdRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="firstTiredRate != null">
+        #{firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="secondTiredRate != null">
+        #{secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdTiredRate != null">
+        #{thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="firstRateContent != null">
+        #{firstRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateContent != null">
+        #{secondRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateContent != null">
+        #{thirdRateContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.TiredRateExample" resultType="java.lang.Long">
+    select count(*) from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tired_rate
+    <set>
+      <if test="record.rateId != null">
+        rate_id = #{record.rateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstRateInterval != null">
+        first_rate_interval = #{record.firstRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.secondRateInterval != null">
+        second_rate_interval = #{record.secondRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.thirdRateInterval != null">
+        third_rate_interval = #{record.thirdRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstTiredRate != null">
+        first_tired_rate = #{record.firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.secondTiredRate != null">
+        second_tired_rate = #{record.secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.thirdTiredRate != null">
+        third_tired_rate = #{record.thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstRateContent != null">
+        first_rate_content = #{record.firstRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondRateContent != null">
+        second_rate_content = #{record.secondRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdRateContent != null">
+        third_rate_content = #{record.thirdRateContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tired_rate
+    set rate_id = #{record.rateId,jdbcType=INTEGER},
+      first_rate_interval = #{record.firstRateInterval,jdbcType=INTEGER},
+      second_rate_interval = #{record.secondRateInterval,jdbcType=INTEGER},
+      third_rate_interval = #{record.thirdRateInterval,jdbcType=INTEGER},
+      first_tired_rate = #{record.firstTiredRate,jdbcType=DOUBLE},
+      second_tired_rate = #{record.secondTiredRate,jdbcType=DOUBLE},
+      third_tired_rate = #{record.thirdTiredRate,jdbcType=DOUBLE},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      first_rate_content = #{record.firstRateContent,jdbcType=VARCHAR},
+      second_rate_content = #{record.secondRateContent,jdbcType=VARCHAR},
+      third_rate_content = #{record.thirdRateContent,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    <set>
+      <if test="firstRateInterval != null">
+        first_rate_interval = #{firstRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval = #{secondRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval = #{thirdRateInterval,jdbcType=INTEGER},
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate = #{firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate = #{secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate = #{thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="firstRateContent != null">
+        first_rate_content = #{firstRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateContent != null">
+        second_rate_content = #{secondRateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateContent != null">
+        third_rate_content = #{thirdRateContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    set first_rate_interval = #{firstRateInterval,jdbcType=INTEGER},
+      second_rate_interval = #{secondRateInterval,jdbcType=INTEGER},
+      third_rate_interval = #{thirdRateInterval,jdbcType=INTEGER},
+      first_tired_rate = #{firstTiredRate,jdbcType=DOUBLE},
+      second_tired_rate = #{secondTiredRate,jdbcType=DOUBLE},
+      third_tired_rate = #{thirdTiredRate,jdbcType=DOUBLE},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      first_rate_content = #{firstRateContent,jdbcType=VARCHAR},
+      second_rate_content = #{secondRateContent,jdbcType=VARCHAR},
+      third_rate_content = #{thirdRateContent,jdbcType=VARCHAR}
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.epp.pojo.TiredRate">
+    <id column="rate_id" jdbcType="INTEGER" property="rateId" />
+    <result column="first_rate_interval" jdbcType="VARCHAR" property="firstRateInterval" />
+    <result column="second_rate_interval" jdbcType="VARCHAR" property="secondRateInterval" />
+    <result column="third_rate_interval" jdbcType="VARCHAR" property="thirdRateInterval" />
+    <result column="first_tired_rate" jdbcType="DOUBLE" property="firstTiredRate" />
+    <result column="second_tired_rate" jdbcType="DOUBLE" property="secondTiredRate" />
+    <result column="third_tired_rate" jdbcType="DOUBLE" property="thirdTiredRate" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rate_id, first_rate_interval, second_rate_interval, third_rate_interval, first_tired_rate, 
+    second_tired_rate, third_tired_rate, year, month, comment
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.TiredRateExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.TiredRateExample">
+    delete from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate (first_rate_interval, second_rate_interval, 
+      third_rate_interval, first_tired_rate, second_tired_rate, 
+      third_tired_rate, year, month, 
+      comment)
+    values (#{firstRateInterval,jdbcType=VARCHAR}, #{secondRateInterval,jdbcType=VARCHAR}, 
+      #{thirdRateInterval,jdbcType=VARCHAR}, #{firstTiredRate,jdbcType=DOUBLE}, #{secondTiredRate,jdbcType=DOUBLE}, 
+      #{thirdTiredRate,jdbcType=DOUBLE}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        first_rate_interval,
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval,
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval,
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate,
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate,
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        #{firstRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateInterval != null">
+        #{secondRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateInterval != null">
+        #{thirdRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="firstTiredRate != null">
+        #{firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="secondTiredRate != null">
+        #{secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdTiredRate != null">
+        #{thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.TiredRateExample" resultType="java.lang.Long">
+    select count(*) from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tired_rate
+    <set>
+      <if test="record.rateId != null">
+        rate_id = #{record.rateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstRateInterval != null">
+        first_rate_interval = #{record.firstRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondRateInterval != null">
+        second_rate_interval = #{record.secondRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdRateInterval != null">
+        third_rate_interval = #{record.thirdRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstTiredRate != null">
+        first_tired_rate = #{record.firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.secondTiredRate != null">
+        second_tired_rate = #{record.secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.thirdTiredRate != null">
+        third_tired_rate = #{record.thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tired_rate
+    set rate_id = #{record.rateId,jdbcType=INTEGER},
+      first_rate_interval = #{record.firstRateInterval,jdbcType=VARCHAR},
+      second_rate_interval = #{record.secondRateInterval,jdbcType=VARCHAR},
+      third_rate_interval = #{record.thirdRateInterval,jdbcType=VARCHAR},
+      first_tired_rate = #{record.firstTiredRate,jdbcType=DOUBLE},
+      second_tired_rate = #{record.secondTiredRate,jdbcType=DOUBLE},
+      third_tired_rate = #{record.thirdTiredRate,jdbcType=DOUBLE},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    <set>
+      <if test="firstRateInterval != null">
+        first_rate_interval = #{firstRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval = #{secondRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval = #{thirdRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate = #{firstTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate = #{secondTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate = #{thirdTiredRate,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    set first_rate_interval = #{firstRateInterval,jdbcType=VARCHAR},
+      second_rate_interval = #{secondRateInterval,jdbcType=VARCHAR},
+      third_rate_interval = #{thirdRateInterval,jdbcType=VARCHAR},
+      first_tired_rate = #{firstTiredRate,jdbcType=DOUBLE},
+      second_tired_rate = #{secondTiredRate,jdbcType=DOUBLE},
+      third_tired_rate = #{thirdTiredRate,jdbcType=DOUBLE},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR}
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.epp.pojo.TiredRate">
+    <id column="rate_id" jdbcType="INTEGER" property="rateId" />
+    <result column="first_rate_interval" jdbcType="VARCHAR" property="firstRateInterval" />
+    <result column="second_rate_interval" jdbcType="VARCHAR" property="secondRateInterval" />
+    <result column="third_rate_interval" jdbcType="VARCHAR" property="thirdRateInterval" />
+    <result column="first_tired_rate" jdbcType="INTEGER" property="firstTiredRate" />
+    <result column="second_tired_rate" jdbcType="INTEGER" property="secondTiredRate" />
+    <result column="third_tired_rate" jdbcType="INTEGER" property="thirdTiredRate" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rate_id, first_rate_interval, second_rate_interval, third_rate_interval, first_tired_rate, 
+    second_tired_rate, third_tired_rate, year, month, comment
+  </sql>
+  <select id="selectByExample" parameterType="com.epp.pojo.TiredRateExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tired_rate
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epp.pojo.TiredRateExample">
+    delete from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate (first_rate_interval, second_rate_interval, 
+      third_rate_interval, first_tired_rate, second_tired_rate, 
+      third_tired_rate, year, month, 
+      comment)
+    values (#{firstRateInterval,jdbcType=VARCHAR}, #{secondRateInterval,jdbcType=VARCHAR}, 
+      #{thirdRateInterval,jdbcType=VARCHAR}, #{firstTiredRate,jdbcType=INTEGER}, #{secondTiredRate,jdbcType=INTEGER}, 
+      #{thirdTiredRate,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.epp.pojo.TiredRate">
+    <selectKey keyProperty="rateId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tired_rate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        first_rate_interval,
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval,
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval,
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate,
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate,
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="firstRateInterval != null">
+        #{firstRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateInterval != null">
+        #{secondRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateInterval != null">
+        #{thirdRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="firstTiredRate != null">
+        #{firstTiredRate,jdbcType=INTEGER},
+      </if>
+      <if test="secondTiredRate != null">
+        #{secondTiredRate,jdbcType=INTEGER},
+      </if>
+      <if test="thirdTiredRate != null">
+        #{thirdTiredRate,jdbcType=INTEGER},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epp.pojo.TiredRateExample" resultType="java.lang.Long">
+    select count(*) from tired_rate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tired_rate
+    <set>
+      <if test="record.rateId != null">
+        rate_id = #{record.rateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstRateInterval != null">
+        first_rate_interval = #{record.firstRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondRateInterval != null">
+        second_rate_interval = #{record.secondRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdRateInterval != null">
+        third_rate_interval = #{record.thirdRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstTiredRate != null">
+        first_tired_rate = #{record.firstTiredRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.secondTiredRate != null">
+        second_tired_rate = #{record.secondTiredRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.thirdTiredRate != null">
+        third_tired_rate = #{record.thirdTiredRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tired_rate
+    set rate_id = #{record.rateId,jdbcType=INTEGER},
+      first_rate_interval = #{record.firstRateInterval,jdbcType=VARCHAR},
+      second_rate_interval = #{record.secondRateInterval,jdbcType=VARCHAR},
+      third_rate_interval = #{record.thirdRateInterval,jdbcType=VARCHAR},
+      first_tired_rate = #{record.firstTiredRate,jdbcType=INTEGER},
+      second_tired_rate = #{record.secondTiredRate,jdbcType=INTEGER},
+      third_tired_rate = #{record.thirdTiredRate,jdbcType=INTEGER},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    <set>
+      <if test="firstRateInterval != null">
+        first_rate_interval = #{firstRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRateInterval != null">
+        second_rate_interval = #{secondRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdRateInterval != null">
+        third_rate_interval = #{thirdRateInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="firstTiredRate != null">
+        first_tired_rate = #{firstTiredRate,jdbcType=INTEGER},
+      </if>
+      <if test="secondTiredRate != null">
+        second_tired_rate = #{secondTiredRate,jdbcType=INTEGER},
+      </if>
+      <if test="thirdTiredRate != null">
+        third_tired_rate = #{thirdTiredRate,jdbcType=INTEGER},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epp.pojo.TiredRate">
+    update tired_rate
+    set first_rate_interval = #{firstRateInterval,jdbcType=VARCHAR},
+      second_rate_interval = #{secondRateInterval,jdbcType=VARCHAR},
+      third_rate_interval = #{thirdRateInterval,jdbcType=VARCHAR},
+      first_tired_rate = #{firstTiredRate,jdbcType=INTEGER},
+      second_tired_rate = #{secondTiredRate,jdbcType=INTEGER},
+      third_tired_rate = #{thirdTiredRate,jdbcType=INTEGER},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR}
+    where rate_id = #{rateId,jdbcType=INTEGER}
+  </update>
+</mapper>

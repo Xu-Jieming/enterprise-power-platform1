@@ -4,45 +4,17 @@ import lombok.Data;
 
 @Data
 public class Admin {
+    private Integer adminId;
 
-    //管理员编号
-     private Integer adminId;
+    private String adminName;
 
-     private String adminName;
-     //账号
-     private String account;
+    private Integer account;//
 
-     private String tel;
+    private String pwd;
 
-     private String email;
+    private Integer role;
 
-     private String password;
-
-     private Integer role;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(Integer role) {
-        this.role = role;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
+    private Integer enterpriseId;
 
     public Integer getAdminId() {
         return adminId;
@@ -57,26 +29,38 @@ public class Admin {
     }
 
     public void setAdminName(String adminName) {
-        this.adminName = adminName;
+        this.adminName = adminName == null ? null : adminName.trim();
     }
 
-    public String getTel() {
-        return tel;
+    public Integer getAccount() {
+        return account;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setAccount(Integer account) {
+        this.account = account;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPwd(String pwd) {
+        this.pwd = pwd == null ? null : pwd.trim();
     }
 
+    public Integer getRole() {
+        return role;
+    }
 
+    public void setRole(Integer role) {
+        this.role = role;
+    }
 
+    public Integer getEnterpriseId() {
+        return enterpriseId;
+    }
 
+    public void setEnterpriseId(Integer enterpriseId) {
+        this.enterpriseId = enterpriseId;
+    }
 }

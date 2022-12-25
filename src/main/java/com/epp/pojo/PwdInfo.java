@@ -1,6 +1,8 @@
 package com.epp.pojo;
 
 
+import lombok.Data;
+@Data
 public class PwdInfo {
 
     private String account;

@@ -2,6 +2,7 @@ package com.epp.pojo;
 
 import lombok.Data;
 
+
 @Data
 public class ApiResult<T> {
     /**
