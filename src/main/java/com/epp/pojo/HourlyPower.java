@@ -112,4 +112,6 @@ public class HourlyPower {
     public void setYear(Integer year) {
         this.year = year;
     }
+
+    public void setTime(Integer year,Integer month,Integer day){this.year = year;this.month = month;this.day = day;}
 }

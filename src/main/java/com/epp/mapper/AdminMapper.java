@@ -52,12 +52,12 @@ public interface AdminMapper {
 
     //int updateByPrimaryKeySelective(Admin record);
 
-    @Update("    update admin\n" +
-            "    set admin_name = #{adminName,jdbcType=VARCHAR},\n" +
-            "      account = #{account,jdbcType=INTEGER},\n" +
-            "      pwd = #{pwd,jdbcType=VARCHAR},\n" +
-            "      role = #{role,jdbcType=INTEGER},\n" +
-            "      enterprise_id = #{enterpriseId,jdbcType=INTEGER}\n" +
+    @Update("    update admin" +
+            "    set admin_name = #{adminName,jdbcType=VARCHAR}," +
+            "      account = #{account,jdbcType=INTEGER}," +
+            "      pwd = #{pwd,jdbcType=VARCHAR}," +
+            "      role = #{role,jdbcType=INTEGER}," +
+            "      enterprise_id = #{enterpriseId,jdbcType=INTEGER}" +
             "    where admin_id = #{adminId,jdbcType=INTEGER}")
     int updateByPrimaryKey(Admin record);
 }

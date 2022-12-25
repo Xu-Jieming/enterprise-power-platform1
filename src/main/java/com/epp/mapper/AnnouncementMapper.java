@@ -16,11 +16,11 @@ public interface AnnouncementMapper {
 
     //int deleteByExample(AnnouncementExample example);
 
-    @Delete("    delete from announcement\n" +
+    @Delete("    delete from announcement" +
             "    where announcement_id = #{announcementId,jdbcType=INTEGER}")
     int deleteByPrimaryKey(Integer announcementId);
 
-    @Insert("    insert into announcement (comment, created)\n" +
+    @Insert("    insert into announcement (comment, created)" +
             "    values (#{comment,jdbcType=VARCHAR}, #{created,jdbcType=DATE})")
     int insert(Announcement record);
 
@@ -46,9 +46,9 @@ public interface AnnouncementMapper {
 
     //int updateByPrimaryKeySelective(Announcement record);
 
-    @Update("    update announcement\n" +
-            "    set comment = #{comment,jdbcType=VARCHAR},\n" +
-            "      created = #{created,jdbcType=DATE}\n" +
+    @Update("    update announcement" +
+            "    set comment = #{comment,jdbcType=VARCHAR}," +
+            "      created = #{created,jdbcType=DATE}" +
             "    where announcement_id = #{announcementId,jdbcType=INTEGER}")
     int updateByPrimaryKey(Announcement record);
 }
