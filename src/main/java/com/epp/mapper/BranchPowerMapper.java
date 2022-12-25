@@ -9,6 +9,7 @@ import java.util.List;
 import com.epp.pojo.HourlyPower;
 import org.apache.ibatis.annotations.*;
 
+
 @Mapper
 public interface BranchPowerMapper {
     //long countByExample(BranchPowerExample example);

@@ -3,9 +3,11 @@ package com.epp.mapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.epp.pojo.TiredRate;
+import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 
-import org.apache.ibatis.annotations.*;
+
 
 @Mapper
 public interface TiredRateMapper {
