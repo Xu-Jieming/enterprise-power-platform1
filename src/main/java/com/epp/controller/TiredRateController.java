@@ -59,7 +59,7 @@ public class TiredRateController {
 
     @PostMapping("/tiredRate")
     public ApiResult insert(@RequestBody TiredRate tiredRate){
-        //System.out.println("添加");
+        //System.out.println("添加阶梯费率");
         return rateService.insert(tiredRate);
     }
 }
