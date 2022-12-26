@@ -72,7 +72,10 @@ public class BranchSetServiceImpl implements BranchSetService {
     }
 
     @Override
-    public ApiResult insert(BranchSet branchSet) {
+    public ApiResult insert(Integer enterpriseId) {
+
+        BranchSet branchSet = new BranchSet();
+        branchSet.setEnterpriseId(enterpriseId);
         int insertBranchSet = mapper.insert(branchSet);
         if(insertBranchSet != 0){
             return ApiResultHandler.buildApiResult(200, "添加成功", insertBranchSet);

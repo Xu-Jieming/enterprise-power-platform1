@@ -3,8 +3,7 @@ package com.epp.pojo;
 import lombok.Data;
 
 import lombok.Data;
-@Data
-import lombok.Data;
+
 @Data
 public class Login {
 

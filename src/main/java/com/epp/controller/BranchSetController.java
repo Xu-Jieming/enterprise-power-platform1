@@ -52,6 +52,6 @@ public class BranchSetController {
     @PostMapping("/branchSet")
     public ApiResult insert(@RequestBody BranchSet branchSet){
         //System.out.println("添加企业用能");
-        return branchSetService.insert(branchSet);
+        return branchSetService.insert(branchSet.getEnterpriseId());
     }
 }

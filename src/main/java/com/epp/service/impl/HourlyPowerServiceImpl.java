@@ -32,7 +32,11 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
     @Autowired
     private BranchSetMapper branchSetMapper;
 
-    Calendar ca = Calendar.getInstance();
+    private Calendar ca = Calendar.getInstance();
+
+    private int day =ca.get(Calendar.DAY_OF_MONTH);//一年中的第几天
+    private int month =ca.get(Calendar.MONTH);//第几个月
+    private int year =ca.get(Calendar.YEAR);//年份数值
 
     @Override
     public ApiResult<HourlyPower> selectAll() {
@@ -54,12 +58,23 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
     }
 
     @Override
-    public ApiResult selectByPrimaryKey(Integer hourlyId) {
-        HourlyPower power = mapper.selectByPrimaryKey(hourlyId);
+    public ApiResult selectByEnterpriseId(Integer enterpriseId) {
+        HourlyPower power = mapper.selectByPrimaryKey(enterpriseId);
         if(power != null){
             return ApiResultHandler.buildApiResult(200, "分时用能查询成功", power);
         }
         return ApiResultHandler.buildApiResult(400, "分时用能查询失败", null);
+    }
+
+
+    @Override
+    public ApiResult selectByEntity(Integer enterpriseId,Integer year,Integer month, Integer day) {
+
+        List<HourlyPower> powerList = mapper.selectByEntity(enterpriseId, year,month, day);
+        if(powerList != null){
+            return ApiResultHandler.buildApiResult(200, "根据年月日分时用能查询成功", powerList);
+        }
+        return ApiResultHandler.buildApiResult(400, "根据年月日分时用能查询失败", null);
     }
 
     @Override
@@ -72,14 +87,11 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
     }
 
     @Override
-    public ApiResult update(HourlyPower hourlyPower,Integer enterpriseId) {
+    public ApiResult update(HourlyPower hourlyPower) {
 
-        int day =ca.get(Calendar.DAY_OF_YEAR);//一年中的第几天
-        int month =ca.get(Calendar.MONTH);//第几个月
-        int year =ca.get(Calendar.YEAR);//年份数值
-        hourlyPower.setTime(year,month,day);
+//        hourlyPower.setTime(year,month,day);
 
-        hourlyPower.setEnterpriseId(enterpriseId);
+        int enterpriseId = hourlyPower.getEnterpriseId();
 
         int updateHourlyPower = mapper.updateByPrimaryKey(hourlyPower);
 
@@ -110,36 +122,37 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
     }
 
     @Override
-    public ApiResult insert(HourlyPower hourlyPower,Integer enterpriseId) {
+    public ApiResult insert(Integer enterpriseId) {
 
-        int day =ca.get(Calendar.DAY_OF_YEAR);//一年中的第几天
-        int month =ca.get(Calendar.MONTH);//第几个月
-        int year =ca.get(Calendar.YEAR);//年份数值
+        int insertHourlyPower = 0;
+
+        HourlyPower hourlyPower = new HourlyPower();
         hourlyPower.setTime(year,month,day);
-
         hourlyPower.setEnterpriseId(enterpriseId);
 
-        int insertHourlyPower = mapper.insert(hourlyPower);
-
         BranchSet branchSet = branchSetMapper.selectByEnterpriseId(enterpriseId);//获取当前的支路设定
+        hourlyPower.setBranchId(branchSet.getBranchId());
 
-        if(hourlyPower.getBranchSet() == 1 && branchSet.getFirstBranchSet() != 1) {
+        if( branchSet.getFirstBranchSet() == 1) {
+            hourlyPower.setBranchSet(1);
+            insertHourlyPower = mapper.insert(hourlyPower);
 
-            return ApiResultHandler.buildApiResult(1000, "第一支路没有开启", insertHourlyPower);
+        } if( branchSet.getSecondBranchSet() == 1){
 
-        }else if(hourlyPower.getBranchSet() == 2 && branchSet.getSecondBranchSet() != 1){
+            hourlyPower.setBranchSet(2);
+            insertHourlyPower = mapper.insert(hourlyPower);
 
-            return ApiResultHandler.buildApiResult(1000, "第二支路没有开启", insertHourlyPower);
+        } if(branchSet.getThirdBranchSet() == 1){
+            hourlyPower.setBranchSet(3);
+            insertHourlyPower = mapper.insert(hourlyPower);
 
-        }else if(hourlyPower.getBranchSet() == 3 && branchSet.getThirdBranchSet() != 1){
-
-            return ApiResultHandler.buildApiResult(1000, "第三支路没有开启", insertHourlyPower);
-
-        }else if(hourlyPower.getBranchSet() == 4 && branchSet.getForthBranchSet() != 1){
-
-            return ApiResultHandler.buildApiResult(1000, "第四支路没有开启", insertHourlyPower);
+        } if(branchSet.getForthBranchSet() == 1){
+            hourlyPower.setBranchSet(4);
+            insertHourlyPower = mapper.insert(hourlyPower);
 
         }
+
+
 
         if(insertHourlyPower != 0){
             return ApiResultHandler.buildApiResult(200, "添加成功", insertHourlyPower);

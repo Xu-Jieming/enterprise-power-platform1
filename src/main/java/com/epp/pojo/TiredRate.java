@@ -1,8 +1,10 @@
 package com.epp.pojo;
-
 import lombok.Data;
+
+
 @Data
 public class TiredRate {
+
     private Integer rateId;
 
     private Integer firstRateInterval;

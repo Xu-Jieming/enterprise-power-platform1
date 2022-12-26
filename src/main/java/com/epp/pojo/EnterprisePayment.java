@@ -5,9 +5,15 @@ import lombok.Data;
 public class EnterprisePayment {
     private Integer enterprisePaymentId;
 
-    private String enterpriseId;
+    private Integer enterpriseId;
 
-    private String payment;
+    private double firstRatePayment;
+
+    private double secondRatePayment;
+
+    private  double thirdRatePayment;
+
+    private double sumRatePayment;
 
     private Integer year;
 
@@ -23,20 +29,44 @@ public class EnterprisePayment {
         this.enterprisePaymentId = enterprisePaymentId;
     }
 
-    public String getEnterpriseId() {
+    public Integer getEnterpriseId() {
         return enterpriseId;
     }
 
-    public void setEnterpriseId(String enterpriseId) {
-        this.enterpriseId = enterpriseId == null ? null : enterpriseId.trim();
+    public void setEnterpriseId(Integer enterpriseId) {
+        this.enterpriseId = enterpriseId ;
     }
 
-    public String getPayment() {
-        return payment;
+    public double getFirstRatePayment() {
+        return firstRatePayment;
     }
 
-    public void setPayment(String payment) {
-        this.payment = payment == null ? null : payment.trim();
+    public void setFirstRatePayment(double firstRatePayment) {
+        this.firstRatePayment = firstRatePayment;
+    }
+
+    public double getSecondRatePayment() {
+        return secondRatePayment;
+    }
+
+    public void setSecondRatePayment(double secondRatePayment) {
+        this.secondRatePayment = secondRatePayment;
+    }
+
+    public double getThirdRatePayment() {
+        return thirdRatePayment;
+    }
+
+    public void setThirdRatePayment(double thirdRatePayment) {
+        this.thirdRatePayment = thirdRatePayment;
+    }
+
+    public double getSumRatePayment() {
+        return sumRatePayment;
+    }
+
+    public void setSumRatePayment(double sumRatePayment) {
+        this.sumRatePayment = sumRatePayment;
     }
 
     public Integer getYear() {
@@ -62,4 +92,9 @@ public class EnterprisePayment {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public void setTime(Integer year,Integer month) {
+        this.year = year;this.month = month;
+    }
+
 }

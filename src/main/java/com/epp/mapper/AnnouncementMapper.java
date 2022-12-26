@@ -16,20 +16,20 @@ public interface AnnouncementMapper {
 
     //int deleteByExample(AnnouncementExample example);
 
-    @Delete("    delete from announcement" +
-            "    where announcement_id = #{announcementId,jdbcType=INTEGER}")
+    @Delete("delete from announcement" +
+            " where announcement_id = #{announcementId,jdbcType=INTEGER}")
     int deleteByPrimaryKey(Integer announcementId);
 
-    @Insert("    insert into announcement (comment, created)" +
-            "    values (#{comment,jdbcType=VARCHAR}, #{created,jdbcType=DATE})")
+    @Insert("insert into announcement (comment,created)" +
+            "values (#{comment,jdbcType=VARCHAR},#{created,jdbcType=DATE})")
     int insert(Announcement record);
 
     //int insertSelective(Announcement record);
 
     //List<Announcement> selectByExample(AnnouncementExample example);
 
-    @Select("    select from announcement" +
-            "    where announcement_id = #{announcementId,jdbcType=INTEGER}")
+    @Select("select * from announcement" +
+            " where announcement_id = #{announcementId,jdbcType=INTEGER}")
     Announcement selectByPrimaryKey(Integer announcementId);
 
 
@@ -40,15 +40,15 @@ public interface AnnouncementMapper {
     IPage<Announcement> selectAll(Page page);
 
 
-    ////int updateByExampleSelective(@Param("record") Announcement record, @Param("example") AnnouncementExample example);
+    ////int updateByExampleSelective(@Param("record") Announcement record,@Param("example") AnnouncementExample example);
 
-    //int updateByExample(@Param("record") Announcement record, @Param("example") AnnouncementExample example);
+    //int updateByExample(@Param("record") Announcement record,@Param("example") AnnouncementExample example);
 
     //int updateByPrimaryKeySelective(Announcement record);
 
-    @Update("    update announcement" +
-            "    set comment = #{comment,jdbcType=VARCHAR}," +
-            "      created = #{created,jdbcType=DATE}" +
-            "    where announcement_id = #{announcementId,jdbcType=INTEGER}")
+    @Update("update announcement" +
+            "set comment = #{comment,jdbcType=VARCHAR}," +
+            "created = #{created,jdbcType=DATE}" +
+            " where announcement_id = #{announcementId,jdbcType=INTEGER}")
     int updateByPrimaryKey(Announcement record);
 }

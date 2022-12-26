@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 public interface LoginMapper {
 
     @Select("select admin_id,admin_name,tel,email,account,role from admin where account = #{account} and password = #{password}")
-    public Admin adminLogin(@Param("account") String account, @Param("password") String password);
+    public Admin adminLogin(@Param("account") String account,@Param("password") String password);
 
 
 }

@@ -13,15 +13,15 @@ public interface BranchSetMapper {
 
     //int deleteByExample(BranchSetExample example);
 
-    @Delete("    delete from branch_set" +
-            "    where branch_id = #{branchId,jdbcType=INTEGER}")
+    @Delete("delete from branch_set" +
+            " where branch_id = #{branchId,jdbcType=INTEGER}")
     int deleteByPrimaryKey(Integer branchId);
 
 
-    @Insert("    insert into branch_set (enterprise_id, first_branch_set, second_branch_set, " +
-            "      third_branch_set, forth_branch_set)" +
-            "    values (#{enterpriseId,jdbcType=INTEGER}, #{firstBranchSet,jdbcType=INTEGER}, #{secondBranchSet,jdbcType=INTEGER}, " +
-            "      #{thirdBranchSet,jdbcType=INTEGER}, #{forthBranchSet,jdbcType=INTEGER})")
+    @Insert("insert into branch_set (enterprise_id,first_branch_set,second_branch_set," +
+            "third_branch_set,forth_branch_set)" +
+            "values (#{enterpriseId,jdbcType=INTEGER},#{firstBranchSet,jdbcType=INTEGER},#{secondBranchSet,jdbcType=INTEGER}," +
+            "#{thirdBranchSet,jdbcType=INTEGER},#{forthBranchSet,jdbcType=INTEGER})")
     int insert(BranchSet record);
 
 //    int insertSelective(BranchSet record);
@@ -29,8 +29,8 @@ public interface BranchSetMapper {
 //    List<BranchSet> selectByExample(BranchSetExample example);
 
 
-    @Select("    select from branch_set" +
-            "    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}")
+    @Select("select * from branch_set" +
+            " where enterprise_id = #{enterpriseId,jdbcType=INTEGER}")
     BranchSet selectByEnterpriseId(Integer enterpriseId);
 
 
@@ -41,18 +41,18 @@ public interface BranchSetMapper {
     IPage<BranchSet> selectAll(Page page);
 
 
-    ////int updateByExampleSelective(@Param("record") BranchSet record, @Param("example") BranchSetExample example);
+    ////int updateByExampleSelective(@Param("record") BranchSet record,@Param("example") BranchSetExample example);
 
-    //int updateByExample(@Param("record") BranchSet record, @Param("example") BranchSetExample example);
+    //int updateByExample(@Param("record") BranchSet record,@Param("example") BranchSetExample example);
 
 //    int updateByPrimaryKeySelective(BranchSet record);
 
-    @Update("    update branch_set" +
-            "    set enterprise_id = #{enterpriseId,jdbcType=INTEGER}," +
-            "      first_branch_set = #{firstBranchSet,jdbcType=INTEGER}," +
-            "      second_branch_set = #{secondBranchSet,jdbcType=INTEGER}," +
-            "      third_branch_set = #{thirdBranchSet,jdbcType=INTEGER}," +
-            "      forth_branch_set = #{forthBranchSet,jdbcType=INTEGER}" +
-            "    where branch_id = #{branchId,jdbcType=INTEGER}")
+    @Update("update branch_set" +
+            "set enterprise_id = #{enterpriseId,jdbcType=INTEGER}," +
+            "first_branch_set = #{firstBranchSet,jdbcType=INTEGER}," +
+            "second_branch_set = #{secondBranchSet,jdbcType=INTEGER}," +
+            "third_branch_set = #{thirdBranchSet,jdbcType=INTEGER}," +
+            "forth_branch_set = #{forthBranchSet,jdbcType=INTEGER}" +
+            " where branch_id = #{branchId,jdbcType=INTEGER}")
     int updateByPrimaryKey(BranchSet record);
 }

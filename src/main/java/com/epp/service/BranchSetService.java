@@ -24,6 +24,6 @@ public interface BranchSetService {
 
     public ApiResult update(BranchSet branchPower);
 
-    public ApiResult insert(BranchSet branchPower);
+    public ApiResult insert(Integer enterpriseId);
 
 }

@@ -18,9 +18,11 @@ public interface EnterprisePowerService {
 
     public ApiResult selectByPrimaryKey(Integer enterprisePowerId);
 
+    public ApiResult selectByEnterprise(Integer enterprisePowerId);
+
     public ApiResult deleteByPrimaryKey(Integer enterprisePowerId);
 
     public ApiResult update(EnterprisePower enterprisePower);
 
-    public ApiResult insert(EnterprisePower enterprisePower);
+    public ApiResult insert(Integer enterpriseId);
 }

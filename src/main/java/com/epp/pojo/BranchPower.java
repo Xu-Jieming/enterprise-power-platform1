@@ -102,4 +102,7 @@ public class BranchPower {
     public void setDay(Integer day) {
         this.day = day;
     }
+
+    public void setTime(Integer year,Integer month,Integer day){this.year = year;this.month = month;this.day = day;}
+
 }

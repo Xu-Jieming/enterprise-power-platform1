@@ -13,13 +13,13 @@ public interface LogMapper {
 
     //int deleteByExample(LogExample example);
 
-    @Delete("    delete from log where log_id = #{logId,jdbcType=INTEGER}")
+    @Delete("delete from log where log_id = #{logId,jdbcType=INTEGER}")
     int deleteByPrimaryKey(Integer logId);
 
-    @Insert("insert into log (action, created, data,  " +
-            "      enterprise_id, admin_id) " +
-            "    values (#{action,jdbcType=VARCHAR}, #{created,jdbcType=DATE}, #{data,jdbcType=VARCHAR},  " +
-            "      #{enterpriseId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER})")
+    @Insert("insert into log (action,created,data, " +
+            "enterprise_id,admin_id) " +
+            "values (#{action,jdbcType=VARCHAR},#{created,jdbcType=DATE},#{data,jdbcType=VARCHAR}, " +
+            "#{enterpriseId,jdbcType=INTEGER},#{adminId,jdbcType=INTEGER})")
     int insert(Log record);
 
 //    int insertSelective(Log record);
@@ -27,8 +27,8 @@ public interface LogMapper {
 //    List<Log> selectByExample(LogExample example);
 
     @Select(" select  " +
-            "    from log " +
-            "    where log_id = #{logId,jdbcType=INTEGER}")
+            "from log " +
+            " where log_id = #{logId,jdbcType=INTEGER}")
     Log selectByPrimaryKey(Integer logId);
 
 
@@ -39,18 +39,18 @@ public interface LogMapper {
     IPage<Log> selectAll(Page page);
 
 
-    ////int updateByExampleSelective(@Param("record") Log record, @Param("example") LogExample example);
+    ////int updateByExampleSelective(@Param("record") Log record,@Param("example") LogExample example);
 
-    //int updateByExample(@Param("record") Log record, @Param("example") LogExample example);
+    //int updateByExample(@Param("record") Log record,@Param("example") LogExample example);
 
 //    int updateByPrimaryKeySelective(Log record);
 
     @Update(" update log " +
-            "    set action = #{action,jdbcType=VARCHAR}, " +
-            "      created = #{created,jdbcType=DATE}, " +
-            "      data = #{data,jdbcType=VARCHAR}, " +
-            "      enterprise_id = #{enterpriseId,jdbcType=INTEGER}, " +
-            "      admin_id = #{adminId,jdbcType=INTEGER} " +
-            "    where log_id = #{logId,jdbcType=INTEGER}")
+            "set action = #{action,jdbcType=VARCHAR}," +
+            "created = #{created,jdbcType=DATE}," +
+            "data = #{data,jdbcType=VARCHAR}," +
+            "enterprise_id = #{enterpriseId,jdbcType=INTEGER}," +
+            "admin_id = #{adminId,jdbcType=INTEGER} " +
+            " where log_id = #{logId,jdbcType=INTEGER}")
     int updateByPrimaryKey(Log record);
 }

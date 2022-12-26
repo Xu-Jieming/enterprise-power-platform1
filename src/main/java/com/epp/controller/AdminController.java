@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @ResponseBody
 public class AdminController {
+
     @Autowired
     private AdminService adminService;
 

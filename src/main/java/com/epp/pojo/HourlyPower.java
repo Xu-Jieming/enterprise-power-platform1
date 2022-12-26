@@ -11,7 +11,7 @@ public class HourlyPower {
 
     private Double firstPeriodPower;
 
-    private Double doublePeriodPower;
+    private Double secondPeriodPower;
 
     private Double thirdPeriodPower;
 
@@ -58,11 +58,11 @@ public class HourlyPower {
     }
 
     public Double getDoublePeriodPower() {
-        return doublePeriodPower;
+        return secondPeriodPower;
     }
 
-    public void setDoublePeriodPower(Double doublePeriodPower) {
-        this.doublePeriodPower = doublePeriodPower;
+    public void setDoublePeriodPower(Double secondPeriodPower) {
+        this.secondPeriodPower = secondPeriodPower;
     }
 
     public Double getThirdPeriodPower() {

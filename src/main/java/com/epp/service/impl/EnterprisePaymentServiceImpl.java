@@ -3,19 +3,34 @@ package com.epp.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.epp.mapper.EnterprisePaymentMapper;
-import com.epp.pojo.ApiResult;
-import com.epp.pojo.EnterprisePayment;
+import com.epp.mapper.EnterprisePowerMapper;
+import com.epp.mapper.TiredRateMapper;
+import com.epp.pojo.*;
 import com.epp.pojo.EnterprisePayment;
 import com.epp.service.EnterprisePaymentService;
 import com.epp.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
+@Service
 public class EnterprisePaymentServiceImpl implements EnterprisePaymentService {
+
     @Autowired
     private EnterprisePaymentMapper mapper;
-    
+
+    @Autowired
+    private EnterprisePowerMapper powerMapper;
+
+    @Autowired
+    private TiredRateMapper tiredRateMapper;
+
+    private Calendar ca = Calendar.getInstance();
+    private int month =ca.get(Calendar.MONTH);//第几个月
+    private int year =ca.get(Calendar.YEAR);//年份数值
+
     @Override
     public ApiResult selectAll() {
         List<EnterprisePayment> enterprisePaymentList = mapper.selectAll();
@@ -59,6 +74,24 @@ public class EnterprisePaymentServiceImpl implements EnterprisePaymentService {
 
     @Override
     public ApiResult update(EnterprisePayment enterprisePayment) {
+
+        int enterpriseId = enterprisePayment.getEnterpriseId();
+        int thisYear = enterprisePayment.getYear();
+        int thisMonth = enterprisePayment.getMonth();
+
+        TiredRate tiredRate = tiredRateMapper.selectByTime(thisYear,thisMonth);
+
+        EnterprisePower enterprisePower = powerMapper.selectByEnterprise(enterpriseId,thisYear,thisMonth);//获取当月电费情况
+
+
+        double firstRatePayment = enterprisePower.getFirstRatePower() * tiredRate.getFirstTiredRate();
+        double secondRatePayment = enterprisePower.getSecondRatePower() * tiredRate.getSecondTiredRate();
+        double thirdRatePayment = enterprisePower.getThirdRatePower() * tiredRate.getThirdTiredRate();
+        enterprisePayment.setFirstRatePayment(firstRatePayment);
+        enterprisePayment.setSecondRatePayment(secondRatePayment);
+        enterprisePayment.setThirdRatePayment(thirdRatePayment);
+        enterprisePayment.setSumRatePayment(firstRatePayment+secondRatePayment+thirdRatePayment);
+
         int updateEnterprisePayment = mapper.updateByPrimaryKey(enterprisePayment);
         if(updateEnterprisePayment != 0){
             return ApiResultHandler.buildApiResult(200, "修改成功", updateEnterprisePayment);
@@ -68,12 +101,18 @@ public class EnterprisePaymentServiceImpl implements EnterprisePaymentService {
     }
 
     @Override
-    public ApiResult insert(EnterprisePayment enterprisePayment) {
+    public ApiResult insert(Integer enterpriseId) {
+
+        EnterprisePayment enterprisePayment = new EnterprisePayment();
+        enterprisePayment.setEnterpriseId(enterpriseId);
+        enterprisePayment.setTime(year,month);
+        enterprisePayment.setStatus(0);
+
         int insertEnterprisePayment = mapper.insert(enterprisePayment);
         if(insertEnterprisePayment != 0){
-            return ApiResultHandler.buildApiResult(200, "添加成功", insertEnterprisePayment);
+            return ApiResultHandler.buildApiResult(200, "空的账单添加成功", insertEnterprisePayment);
         }
-        return ApiResultHandler.buildApiResult(400, "添加失败", null);
+        return ApiResultHandler.buildApiResult(400, "空的账单添加失败", null);
 
     }
 }

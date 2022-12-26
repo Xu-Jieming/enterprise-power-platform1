@@ -3,9 +3,9 @@ package com.epp.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.epp.mapper.BranchPowerMapper;
+import com.epp.mapper.BranchSetMapper;
 import com.epp.mapper.HourlyPowerMapper;
-import com.epp.pojo.ApiResult;
-import com.epp.pojo.BranchPower;
+import com.epp.pojo.*;
 import com.epp.pojo.BranchPower;
 import com.epp.pojo.BranchPower;
 import com.epp.service.BranchPowerService;
@@ -32,7 +32,14 @@ public class BranchPowerServiceImpl implements BranchPowerService {
     @Autowired
     private HourlyPowerMapper hourlyPowerMapper;
 
-    Calendar ca = Calendar.getInstance();
+    @Autowired
+    private BranchSetMapper branchSetMapper;
+
+    private  Calendar ca = Calendar.getInstance();
+
+    private  int day =ca.get(Calendar.DAY_OF_MONTH);//一年中的第几天
+    private  int month =ca.get(Calendar.MONTH);//第几个月
+    private  int year =ca.get(Calendar.YEAR);//年份数值
 
     @Override
     public ApiResult selectAll() {
@@ -46,13 +53,15 @@ public class BranchPowerServiceImpl implements BranchPowerService {
 
     @Override
     public ApiResult selectAll(Page<BranchPower> page) {
-        IPage<BranchPower> powerList = mapper.selectAll(page);
+        IPage<BranchPower> powerList = mapper.selectAll(page,year,month, day);
         if(powerList != null){
             return ApiResultHandler.buildApiResult(200, "分页查询所有支路用能成功", powerList);
         }
         return ApiResultHandler.buildApiResult(400, "分页查询所有支路用能失败", null);
 
     }
+
+
 
     @Override
     public ApiResult selectByPrimaryKey(Integer branchPowerId) {
@@ -63,6 +72,23 @@ public class BranchPowerServiceImpl implements BranchPowerService {
         return ApiResultHandler.buildApiResult(400, "支路用能查询失败", null);
 
     }
+
+    @Override
+    public ApiResult selectByEntity(HourlyPower hourlyPower) {
+
+        int enterpriseId = hourlyPower.getEnterpriseId();
+        int thisYear = hourlyPower.getYear();
+        int thisMonth = hourlyPower.getMonth();
+        int thisDay = hourlyPower.getDay();
+
+        List<BranchPower> powerList = mapper.selectByEntity(enterpriseId,thisYear,thisMonth,thisDay);
+        if(powerList != null){
+            return ApiResultHandler.buildApiResult(200, "企业当天支路用能查询成功", powerList);
+        }
+        return ApiResultHandler.buildApiResult(400, "企业当天所有支路用能查询失败", null);
+
+    }
+
 
     @Override
     public ApiResult deleteByPrimaryKey(Integer branchPowerId) {
@@ -76,11 +102,33 @@ public class BranchPowerServiceImpl implements BranchPowerService {
 
     @Override
     public ApiResult update(BranchPower branchPower) {
-        int day =ca.get(Calendar.DAY_OF_YEAR);//一年中的第几天
 
-        int month =ca.get(Calendar.MONTH);//第几个月
+        int enterpriseId = branchPower.getEnterpriseId();
+        BranchSet branchSet = branchSetMapper.selectByEnterpriseId(enterpriseId);//获取当前的支路设定
+//        branchPower.setBranchId(branchSet.getBranchId());这些都是固定的，在insert的时候已经弄好了，要修改的是电能
+//        branchPower.setEnterpriseId(enterpriseId);
+//        branchPower.setTime(year,month,day);因为更改的都是当天的，所以不用更改当天的时间
 
-        int year =ca.get(Calendar.YEAR);//年份数值
+        List<HourlyPower> powerList = hourlyPowerMapper.selectByEntity(enterpriseId,year,month,day);
+        //获取当天的分时用能，一定是当天的，修改的东西也是当天的电能
+        for(HourlyPower power: powerList) {
+            if (power.getBranchSet() == 1 && branchSet.getFirstBranchSet() == 1) {//如果分时用能支路和支路设定符合，那么就将四个时间段的电量叠加起来
+                double firstBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
+                branchPower.setFirstBranchPower(firstBranchPower);
+
+            } else if (power.getBranchSet() == 2 && branchSet.getSecondBranchSet() == 1) {
+                double firstBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
+                branchPower.setFirstBranchPower(firstBranchPower);
+
+            } else if (power.getBranchSet() == 3 && branchSet.getThirdBranchSet() == 1) {
+                double firstBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
+                branchPower.setFirstBranchPower(firstBranchPower);
+
+            } else if (power.getBranchSet() == 4 && branchSet.getForthBranchSet() == 1) {
+                double firstBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
+                branchPower.setFirstBranchPower(firstBranchPower);
+            }
+        }
 
 
         int updateBranchPower = mapper.updateByPrimaryKey(branchPower);
@@ -92,9 +140,31 @@ public class BranchPowerServiceImpl implements BranchPowerService {
     }
 
     @Override
-    public ApiResult insert(BranchPower branchPower) {
+    public ApiResult insert(Integer enterpriseId) {
+
+        BranchSet branchSet = branchSetMapper.selectByEnterpriseId(enterpriseId);//获取当前的支路设定
 
 
+        BranchPower branchPower = new BranchPower();
+        branchPower.setEnterpriseId(enterpriseId);
+        branchPower.setBranchId(branchSet.getBranchId());
+        branchPower.setTime(year,month,day);
+        List<HourlyPower> powerList = hourlyPowerMapper.selectByEntity(enterpriseId,year,month,day);
+        //获取当天的分时用能，一定是当天的，修改的东西也是当天的电能
+        for(HourlyPower power: powerList) {
+            if (branchSet.getFirstBranchSet() == 1) {//如果分时用能支路和支路设定符合，那么就将四个时间段的电量叠加起来
+                branchPower.setFirstBranchPower(0.0);
+
+            }else if (branchSet.getSecondBranchSet() == 1) {
+                branchPower.setSecondBranchPower(0.0);
+
+            }else if ( branchSet.getThirdBranchSet() == 1) {
+                branchPower.setThirdBranchPower(0.0);
+
+            } else if (branchSet.getForthBranchSet() == 1) {
+                branchPower.setForthBranchPower(0.0);
+            }
+        }
 
         int insertBranchPower = mapper.insert(branchPower);
         if(insertBranchPower != 0){

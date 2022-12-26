@@ -10,9 +10,11 @@ import com.epp.pojo.Log;
 import com.epp.service.LogService;
 import com.epp.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class LogSeviceImpl implements LogService {
     
     @Autowired

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @ResponseBody
 public class EnterprisePaymentController {
+
     @Autowired
     private EnterprisePaymentService enterprisePaymentService;
 
@@ -52,6 +53,6 @@ public class EnterprisePaymentController {
     @PostMapping("/enterprisePayment")
     public ApiResult insert(@RequestBody EnterprisePayment enterprisePayment){
         //System.out.println("添加企业费用");
-        return enterprisePaymentService.insert(enterprisePayment);
+        return enterprisePaymentService.insert(enterprisePayment.getEnterpriseId());
     }
 }

@@ -13,22 +13,20 @@ public interface ForewarnMapper {
 
     //int deleteByExample(ForewarnExample example);
 
-    @Delete("    delete from forewarn where forewarn_id = #{forewarnId,jdbcType=INTEGER}")
+    @Delete("delete from forewarn where forewarn_id = #{forewarnId,jdbcType=INTEGER}")
     int deleteByPrimaryKey(Integer forewarnId);
 
-    @Insert("    insert into forewarn (enterprise_id, warning_time, warning_power,  " +
-            "      warning_frequency, created) " +
-            "    values (#{enterpriseId,jdbcType=INTEGER}, #{warningTime,jdbcType=VARCHAR}, #{warningPower,jdbcType=DOUBLE},  " +
-            "      #{warningFrequency,jdbcType=INTEGER}, #{created,jdbcType=DATE})")
+    @Insert("insert into forewarn (enterprise_id,warning_time,warning_power,warning_frequency,created) " +
+            " values (#{enterpriseId,jdbcType=INTEGER},#{warningTime,jdbcType=VARCHAR},#{warningPower,jdbcType=DOUBLE}," +
+            " #{warningFrequency,jdbcType=INTEGER},#{created,jdbcType=DATE})")
     int insert(Forewarn record);
 
 //    int insertSelective(Forewarn record);
 
 //    List<Forewarn> selectByExample(ForewarnExample example);
 
-    @Select("select  " +
-            "    from forewarn " +
-            "    where forewarn_id = #{forewarnId,jdbcType=INTEGER}")
+    @Select("select * from forewarn " +
+            " where forewarn_id = #{forewarnId,jdbcType=INTEGER}")
     Forewarn selectByPrimaryKey(Integer forewarnId);
 
 
@@ -39,18 +37,18 @@ public interface ForewarnMapper {
     IPage<Forewarn> selectAll(Page page);
 
 
-    ////int updateByExampleSelective(@Param("record") Forewarn record, @Param("example") ForewarnExample example);
+    ////int updateByExampleSelective(@Param("record") Forewarn record,@Param("example") ForewarnExample example);
 
-    //int updateByExample(@Param("record") Forewarn record, @Param("example") ForewarnExample example);
+    //int updateByExample(@Param("record") Forewarn record,@Param("example") ForewarnExample example);
 
 //    int updateByPrimaryKeySelective(Forewarn record);
 
-    @Update("  update forewarn " +
-            "    set enterprise_id = #{enterpriseId,jdbcType=INTEGER}, " +
-            "      warning_time = #{warningTime,jdbcType=VARCHAR}, " +
-            "      warning_power = #{warningPower,jdbcType=DOUBLE}, " +
-            "      warning_frequency = #{warningFrequency,jdbcType=INTEGER}, " +
-            "      created = #{created,jdbcType=DATE} " +
-            "    where forewarn_id = #{forewarnId,jdbcType=INTEGER}")
+    @Update("update forewarn " +
+            "set enterprise_id = #{enterpriseId,jdbcType=INTEGER}," +
+            "warning_time = #{warningTime,jdbcType=VARCHAR}," +
+            "warning_power = #{warningPower,jdbcType=DOUBLE}," +
+            "warning_frequency = #{warningFrequency,jdbcType=INTEGER}," +
+            "created = #{created,jdbcType=DATE} " +
+            "where forewarn_id = #{forewarnId,jdbcType=INTEGER}")
     int updateByPrimaryKey(Forewarn record);
 }

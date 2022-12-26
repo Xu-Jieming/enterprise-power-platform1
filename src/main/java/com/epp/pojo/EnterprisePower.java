@@ -1,27 +1,26 @@
 package com.epp.pojo;
 
 import lombok.Data;
+
 @Data
 public class EnterprisePower {
+
     private Integer enterprisePowerId;
 
     private Integer enterpriseId;
 
-    private Integer enterpriseAccount;
+    private double firstRatePower;
 
-    private String firstPeriodPower;
+    private double secondRatePower;
 
-    private String secondPeriodPower;
+    private double thirdRatePower;
 
-    private String thirdPeriodPower;
-
-    private String forthPeriodPower;
+    private double sumPower;
 
     private Integer year;
 
     private Integer month;
 
-    private Integer day;
 
     public Integer getEnterprisePowerId() {
         return enterprisePowerId;
@@ -39,44 +38,36 @@ public class EnterprisePower {
         this.enterpriseId = enterpriseId;
     }
 
-    public Integer getEnterpriseAccount() {
-        return enterpriseAccount;
+    public double getFirstRatePower() {
+        return firstRatePower;
     }
 
-    public void setEnterpriseAccount(Integer enterpriseAccount) {
-        this.enterpriseAccount = enterpriseAccount;
+    public void setFirstRatePower(double firstRatePower) {
+        this.firstRatePower = firstRatePower;
     }
 
-    public String getFirstPeriodPower() {
-        return firstPeriodPower;
+    public double getSecondRatePower() {
+        return secondRatePower;
     }
 
-    public void setFirstPeriodPower(String firstPeriodPower) {
-        this.firstPeriodPower = firstPeriodPower == null ? null : firstPeriodPower.trim();
+    public void setSecondRatePower(double secondRatePower) {
+        this.secondRatePower = secondRatePower;
     }
 
-    public String getSecondPeriodPower() {
-        return secondPeriodPower;
+    public double getThirdRatePower() {
+        return thirdRatePower;
     }
 
-    public void setSecondPeriodPower(String secondPeriodPower) {
-        this.secondPeriodPower = secondPeriodPower == null ? null : secondPeriodPower.trim();
+    public void setThirdRatePower(double thirdRatePower) {
+        this.thirdRatePower = thirdRatePower;
     }
 
-    public String getThirdPeriodPower() {
-        return thirdPeriodPower;
+    public double getSumPower() {
+        return sumPower;
     }
 
-    public void setThirdPeriodPower(String thirdPeriodPower) {
-        this.thirdPeriodPower = thirdPeriodPower == null ? null : thirdPeriodPower.trim();
-    }
-
-    public String getForthPeriodPower() {
-        return forthPeriodPower;
-    }
-
-    public void setForthPeriodPower(String forthPeriodPower) {
-        this.forthPeriodPower = forthPeriodPower == null ? null : forthPeriodPower.trim();
+    public void setSumPower(double sumPower) {
+        this.sumPower = sumPower;
     }
 
     public Integer getYear() {
@@ -95,11 +86,8 @@ public class EnterprisePower {
         this.month = month;
     }
 
-    public Integer getDay() {
-        return day;
-    }
-
-    public void setDay(Integer day) {
-        this.day = day;
+    public void setTime(Integer year,Integer month) {
+        this.year = year;
+        this.month = month;
     }
 }

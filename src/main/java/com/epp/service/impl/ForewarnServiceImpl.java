@@ -9,9 +9,11 @@ import com.epp.pojo.Forewarn;
 import com.epp.service.ForewarnService;
 import com.epp.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ForewarnServiceImpl implements ForewarnService {
     @Autowired
     private ForewarnMapper mapper;

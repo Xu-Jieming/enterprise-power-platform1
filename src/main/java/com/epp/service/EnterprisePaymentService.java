@@ -15,5 +15,5 @@ public interface EnterprisePaymentService {
 
     public ApiResult update(EnterprisePayment EnterprisePayment);
 
-    public ApiResult insert(EnterprisePayment EnterprisePayment);
+    public ApiResult insert(Integer enterpriseId);
 }

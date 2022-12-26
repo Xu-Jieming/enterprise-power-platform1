@@ -3,7 +3,7 @@ package com.epp.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.epp.pojo.ApiResult;
 import com.epp.pojo.Enterprise;
-import com.epp.pojo.EnterprisePower;
+import com.epp.pojo.EnterpriseDailyPower;
 
 /**
  * Created with IntelliJ IDEA.

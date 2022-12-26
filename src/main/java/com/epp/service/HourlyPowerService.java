@@ -18,13 +18,15 @@ public interface HourlyPowerService {
 
     public ApiResult selectAll(Page<HourlyPower> page);
 
-    public ApiResult selectByPrimaryKey(Integer hourlyId);
+    public ApiResult selectByEnterpriseId(Integer enterpriseId);
+
+    public ApiResult selectByEntity(Integer enterpriseId,Integer year,Integer month, Integer day);
 
     public ApiResult deleteByPrimaryKey(Integer hourlyId);
 
-    public ApiResult update(HourlyPower hourlyPower,Integer enterpriseId);
+    public ApiResult update(HourlyPower hourlyPower);
 
-    public ApiResult insert(HourlyPower hourlyPower,Integer enterpriseId);
+    public ApiResult insert(Integer enterpriseId);
 
 
 

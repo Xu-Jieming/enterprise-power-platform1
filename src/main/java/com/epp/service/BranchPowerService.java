@@ -19,9 +19,11 @@ public interface BranchPowerService {
 
     public ApiResult selectByPrimaryKey(Integer branchPowerId);
 
+    public ApiResult selectByEntity(HourlyPower hourlyPower);
+
     public ApiResult deleteByPrimaryKey(Integer branchPowerId);
 
     public ApiResult update(BranchPower branchPower);
 
-    public ApiResult insert(BranchPower branchPower);
+    public ApiResult insert(Integer enterpriseId);
 }
