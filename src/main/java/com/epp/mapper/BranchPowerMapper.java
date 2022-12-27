@@ -42,7 +42,7 @@ public interface BranchPowerMapper {
     * */
     @Select("select * from branch_power" +
             " where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and year = #{year} and month = #{month} and day = #{day}")
-    List<BranchPower> selectByEntity(@Param("enterpriseId") Integer enterpriseId,@Param("year") Integer year,@Param("month") Integer month,@Param("day") Integer day);
+    BranchPower selectByEntity(@Param("enterpriseId") Integer enterpriseId,@Param("year") Integer year,@Param("month") Integer month,@Param("day") Integer day);
 
 
     @Select("select * from branch_power where year = #{year} and month = #{month} and day = #{day}")
@@ -59,12 +59,11 @@ public interface BranchPowerMapper {
     //int updateByExample(@Param("record") BranchPower record,@Param("example") BranchPowerExample example);
 
     //int updateByPrimaryKeySelective(BranchPower record);
-    @Update("update branch_power" +
-            "set first_branch_power = #{firstBranchPower,jdbcType=DOUBLE}," +
+    @Update("update branch_power set first_branch_power = #{firstBranchPower,jdbcType=DOUBLE}," +
             " second_branch_power = #{secondBranchPower,jdbcType=DOUBLE}," +
             "third_branch_power = #{thirdBranchPower,jdbcType=DOUBLE}," +
-            "forth_branch_power = #{forthBranchPower,jdbcType=DOUBLE}," +
-            " where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and year = #{year,jdbcType=INTEGER}" +
+            "forth_branch_power = #{forthBranchPower,jdbcType=DOUBLE} " +
+            "where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and year = #{year,jdbcType=INTEGER} " +
             "and month = #{month,jdbcType=INTEGER} and day = #{day,jdbcType=INTEGER}")
     int updateByPrimaryKey(BranchPower record);
 }

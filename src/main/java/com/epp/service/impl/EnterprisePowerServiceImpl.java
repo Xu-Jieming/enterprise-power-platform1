@@ -39,8 +39,9 @@ public class EnterprisePowerServiceImpl implements EnterprisePowerService {
 
     private Calendar ca = Calendar.getInstance();
 
-    private int month =ca.get(Calendar.MONTH);//第几个月
+    private int month =ca.get(Calendar.MONTH)+1;//第几个月, Attention ! must add one 
     private int year =ca.get(Calendar.YEAR);//年份数值
+    private int day = ca.get(Calendar.DAY_OF_MONTH);
 
 
 
@@ -83,6 +84,16 @@ public class EnterprisePowerServiceImpl implements EnterprisePowerService {
         return ApiResultHandler.buildApiResult(400, "企业用能查询失败", null);
     }
 
+    @Override
+    public ApiResult selectByEntity(Integer enterpriseId) {
+
+        EnterprisePower powerList = mapper.selectByEntity(enterpriseId,year,month);
+        if(powerList != null){
+            return ApiResultHandler.buildApiResult(200, "企业用能查询成功", powerList);
+        }
+        return ApiResultHandler.buildApiResult(400, "企业用能查询失败", null);
+    }
+
 
     @Override
     public ApiResult deleteByPrimaryKey(Integer dailyPowerId) {
@@ -95,35 +106,36 @@ public class EnterprisePowerServiceImpl implements EnterprisePowerService {
     }
 
     @Override
-    public ApiResult update(EnterprisePower dailyPower) {
+    public ApiResult update(Integer enterpriseId) {
 
-        int enterpriseId = dailyPower.getEnterpriseId();
-        int thisMonth = dailyPower.getMonth();
-        int thisYear = dailyPower.getYear();
-        TiredRate tiredRates = tiredRateMapper.selectByTime(thisYear,thisMonth);
+        EnterprisePower monthlyPower = mapper.selectByEntity(enterpriseId,year,month);
+
+        //int thisMonth = monthlyPower.getMonth();
+        //int thisYear = monthlyPower.getYear();
+        TiredRate tiredRates = tiredRateMapper.selectByTime(year,month);
         double sum = 0;
         //获取整个月的量
-        List<EnterpriseDailyPower> powerList =  dailyMapper.selectByEnterprise(enterpriseId,thisYear, thisMonth);
-
+        List<EnterpriseDailyPower> powerList =  dailyMapper.selectByMonth(enterpriseId,year, month);
+        System.out.println(powerList);
         for(EnterpriseDailyPower power:powerList){
-            sum += power.getDailyPower();
+            sum += power.getDailyPeriodPower();
         }
 
-        dailyPower.setSumPower(sum);//先把总量给放进去
+        monthlyPower.setSumPower(sum);//先把总量给放进去
         //然后把这个月的阶梯收费给算出来
-        if(sum <= tiredRates.getSecondTiredRate()){
-            dailyPower.setFirstRatePower(sum);
-        }else if(sum <= tiredRates.getThirdTiredRate()){
-            dailyPower.setFirstRatePower(tiredRates.getSecondTiredRate());//如果大于第一个区间，那就将第二个区间的左边设为第一个值
-            dailyPower.setSecondRatePower(sum - tiredRates.getSecondTiredRate());
-        }else if(sum > tiredRates.getThirdTiredRate()){
-            dailyPower.setFirstRatePower(tiredRates.getSecondTiredRate());//如果大于第一个区间，那就将第二个区间的左边设为第一个值
-            dailyPower.setSecondRatePower(tiredRates.getThirdTiredRate()-tiredRates.getSecondTiredRate());
-            dailyPower.setThirdRatePower(sum - tiredRates.getThirdTiredRate());
+        if(sum <= tiredRates.getSecondRateInterval()){
+            monthlyPower.setFirstRatePower(sum);
+        }else if(sum <= tiredRates.getThirdRateInterval()){
+            monthlyPower.setFirstRatePower(tiredRates.getSecondRateInterval());//如果大于第一个区间，那就将第二个区间的左边设为第一个值
+            monthlyPower.setSecondRatePower(sum - tiredRates.getSecondRateInterval());
+        }else if(sum > tiredRates.getThirdRateInterval()){
+            monthlyPower.setFirstRatePower(tiredRates.getSecondRateInterval());//如果大于第一个区间，那就将第二个区间的左边设为第一个值
+            monthlyPower.setSecondRatePower(tiredRates.getThirdRateInterval()-tiredRates.getSecondRateInterval());
+            monthlyPower.setThirdRatePower(sum - tiredRates.getThirdRateInterval());
         }
 
 
-        int updateEnterprisePower = mapper.updateByPrimaryKey(dailyPower);
+        int updateEnterprisePower = mapper.updateByPrimaryKey(monthlyPower);
         if(updateEnterprisePower != 0){
             return ApiResultHandler.buildApiResult(200, "修改成功", updateEnterprisePower);
         }
@@ -134,13 +146,13 @@ public class EnterprisePowerServiceImpl implements EnterprisePowerService {
     @Override
     public ApiResult insert(Integer enterpriseId) {
 
-        EnterprisePower dailyPower = new EnterprisePower();
+        EnterprisePower monthlyPower = new EnterprisePower();
 
-        dailyPower.setEnterpriseId(enterpriseId);
-        dailyPower.setTime(year,month);
+        monthlyPower.setEnterpriseId(enterpriseId);
+        monthlyPower.setTime(year,month);
 
 
-        int insertEnterprisePower = mapper.insert(dailyPower);
+        int insertEnterprisePower = mapper.insert(monthlyPower);
         if(insertEnterprisePower != 0){
             return ApiResultHandler.buildApiResult(200, "添加成功", insertEnterprisePower);
         }

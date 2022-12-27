@@ -13,7 +13,7 @@ public interface EnterprisePaymentService {
 
     public ApiResult deleteByPrimaryKey(Integer enterprisePaymentId);
 
-    public ApiResult update(EnterprisePayment EnterprisePayment);
+    public ApiResult update(Integer enterpriseId);
 
     public ApiResult insert(Integer enterpriseId);
 }

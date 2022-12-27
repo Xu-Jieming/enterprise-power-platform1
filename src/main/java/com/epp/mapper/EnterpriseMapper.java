@@ -54,7 +54,6 @@ public interface EnterpriseMapper {
             "set name = #{name,jdbcType=VARCHAR}," +
             "email = #{email,jdbcType=VARCHAR}," +
             "tel = #{tel,jdbcType=INTEGER}," +
-            "account = #{account,jdbcType=INTEGER}" +
-            " where enterprise_id = #{enterpriseId,jdbcType=INTEGER}")
+            "account = #{account,jdbcType=INTEGER} where enterprise_id = #{enterpriseId,jdbcType=INTEGER}")
     int updateByPrimaryKey(Enterprise record);
 }

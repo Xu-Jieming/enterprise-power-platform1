@@ -42,7 +42,7 @@ public interface TiredRateMapper {
 
     @Select("select * from tired_rate" +
             " where year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER}")
-    TiredRate selectByTime(Integer year,Integer month);
+    TiredRate selectByTime(@Param("year") Integer year,@Param("month") Integer month);
 
 
     @Select("select * from tired_rate")

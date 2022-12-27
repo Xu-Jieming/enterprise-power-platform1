@@ -38,7 +38,7 @@ public class BranchPowerServiceImpl implements BranchPowerService {
     private  Calendar ca = Calendar.getInstance();
 
     private  int day =ca.get(Calendar.DAY_OF_MONTH);//一年中的第几天
-    private  int month =ca.get(Calendar.MONTH);//第几个月
+    private  int month =ca.get(Calendar.MONTH)+1;//第几个月, Attention ! must add one 
     private  int year =ca.get(Calendar.YEAR);//年份数值
 
     @Override
@@ -74,19 +74,16 @@ public class BranchPowerServiceImpl implements BranchPowerService {
     }
 
     @Override
-    public ApiResult selectByEntity(HourlyPower hourlyPower) {
+    public BranchPower selectByEntity(HourlyPower hourlyPower) {
 
         int enterpriseId = hourlyPower.getEnterpriseId();
         int thisYear = hourlyPower.getYear();
         int thisMonth = hourlyPower.getMonth();
         int thisDay = hourlyPower.getDay();
 
-        List<BranchPower> powerList = mapper.selectByEntity(enterpriseId,thisYear,thisMonth,thisDay);
-        if(powerList != null){
-            return ApiResultHandler.buildApiResult(200, "企业当天支路用能查询成功", powerList);
-        }
-        return ApiResultHandler.buildApiResult(400, "企业当天所有支路用能查询失败", null);
+        BranchPower power = mapper.selectByEntity(enterpriseId,thisYear,thisMonth,thisDay);
 
+        return power;
     }
 
 
@@ -101,32 +98,36 @@ public class BranchPowerServiceImpl implements BranchPowerService {
     }
 
     @Override
-    public ApiResult update(BranchPower branchPower) {
+    public ApiResult update(Integer enterpriseId) {
 
-        int enterpriseId = branchPower.getEnterpriseId();
+        BranchPower branchPower = mapper.selectByEntity(enterpriseId,year,month,day);//一个企业的一天只有一个
+
+
         BranchSet branchSet = branchSetMapper.selectByEnterpriseId(enterpriseId);//获取当前的支路设定
 //        branchPower.setBranchId(branchSet.getBranchId());这些都是固定的，在insert的时候已经弄好了，要修改的是电能
 //        branchPower.setEnterpriseId(enterpriseId);
 //        branchPower.setTime(year,month,day);因为更改的都是当天的，所以不用更改当天的时间
 
+
         List<HourlyPower> powerList = hourlyPowerMapper.selectByEntity(enterpriseId,year,month,day);
         //获取当天的分时用能，一定是当天的，修改的东西也是当天的电能
         for(HourlyPower power: powerList) {
+
             if (power.getBranchSet() == 1 && branchSet.getFirstBranchSet() == 1) {//如果分时用能支路和支路设定符合，那么就将四个时间段的电量叠加起来
                 double firstBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
                 branchPower.setFirstBranchPower(firstBranchPower);
 
-            } else if (power.getBranchSet() == 2 && branchSet.getSecondBranchSet() == 1) {
-                double firstBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
-                branchPower.setFirstBranchPower(firstBranchPower);
+            }  if (power.getBranchSet() == 2 && branchSet.getSecondBranchSet() == 1) {
+                double secondBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
+                branchPower.setSecondBranchPower(secondBranchPower);
 
-            } else if (power.getBranchSet() == 3 && branchSet.getThirdBranchSet() == 1) {
-                double firstBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
-                branchPower.setFirstBranchPower(firstBranchPower);
+            }  if (power.getBranchSet() == 3 && branchSet.getThirdBranchSet() == 1) {
+                double thirdBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
+                branchPower.setThirdBranchPower(thirdBranchPower);
 
-            } else if (power.getBranchSet() == 4 && branchSet.getForthBranchSet() == 1) {
-                double firstBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
-                branchPower.setFirstBranchPower(firstBranchPower);
+            }  if (power.getBranchSet() == 4 && branchSet.getForthBranchSet() == 1) {
+                double forthBranchPower = power.getFirstPeriodPower() + power.getDoublePeriodPower() + power.getThirdPeriodPower() + power.getForthPeriodPower();
+                branchPower.setForthBranchPower(forthBranchPower);
             }
         }
 
@@ -155,13 +156,13 @@ public class BranchPowerServiceImpl implements BranchPowerService {
             if (branchSet.getFirstBranchSet() == 1) {//如果分时用能支路和支路设定符合，那么就将四个时间段的电量叠加起来
                 branchPower.setFirstBranchPower(0.0);
 
-            }else if (branchSet.getSecondBranchSet() == 1) {
+            } if (branchSet.getSecondBranchSet() == 1) {
                 branchPower.setSecondBranchPower(0.0);
 
-            }else if ( branchSet.getThirdBranchSet() == 1) {
+            } if ( branchSet.getThirdBranchSet() == 1) {
                 branchPower.setThirdBranchPower(0.0);
 
-            } else if (branchSet.getForthBranchSet() == 1) {
+            }  if (branchSet.getForthBranchSet() == 1) {
                 branchPower.setForthBranchPower(0.0);
             }
         }

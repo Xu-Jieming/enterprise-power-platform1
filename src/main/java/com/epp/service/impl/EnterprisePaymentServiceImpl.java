@@ -28,7 +28,7 @@ public class EnterprisePaymentServiceImpl implements EnterprisePaymentService {
     private TiredRateMapper tiredRateMapper;
 
     private Calendar ca = Calendar.getInstance();
-    private int month =ca.get(Calendar.MONTH);//第几个月
+    private int month =ca.get(Calendar.MONTH)+1;//第几个月, Attention ! must add one 
     private int year =ca.get(Calendar.YEAR);//年份数值
 
     @Override
@@ -73,15 +73,15 @@ public class EnterprisePaymentServiceImpl implements EnterprisePaymentService {
     }
 
     @Override
-    public ApiResult update(EnterprisePayment enterprisePayment) {
+    public ApiResult update(Integer enterpriseId) {
 
-        int enterpriseId = enterprisePayment.getEnterpriseId();
-        int thisYear = enterprisePayment.getYear();
-        int thisMonth = enterprisePayment.getMonth();
+        EnterprisePayment enterprisePayment = mapper.selectByEntity(enterpriseId,year,month);
 
-        TiredRate tiredRate = tiredRateMapper.selectByTime(thisYear,thisMonth);
 
-        EnterprisePower enterprisePower = powerMapper.selectByEnterprise(enterpriseId,thisYear,thisMonth);//获取当月电费情况
+
+        TiredRate tiredRate = tiredRateMapper.selectByTime(year,month);
+
+        EnterprisePower enterprisePower = powerMapper.selectByEntity(enterpriseId,year,month);//获取当月电费情况
 
 
         double firstRatePayment = enterprisePower.getFirstRatePower() * tiredRate.getFirstTiredRate();
@@ -90,7 +90,7 @@ public class EnterprisePaymentServiceImpl implements EnterprisePaymentService {
         enterprisePayment.setFirstRatePayment(firstRatePayment);
         enterprisePayment.setSecondRatePayment(secondRatePayment);
         enterprisePayment.setThirdRatePayment(thirdRatePayment);
-        enterprisePayment.setSumRatePayment(firstRatePayment+secondRatePayment+thirdRatePayment);
+        enterprisePayment.setSumPayment(firstRatePayment+secondRatePayment+thirdRatePayment);
 
         int updateEnterprisePayment = mapper.updateByPrimaryKey(enterprisePayment);
         if(updateEnterprisePayment != 0){

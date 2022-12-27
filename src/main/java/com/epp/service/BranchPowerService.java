@@ -5,6 +5,8 @@ import com.epp.pojo.ApiResult;
 import com.epp.pojo.BranchPower;
 import com.epp.pojo.HourlyPower;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -19,11 +21,11 @@ public interface BranchPowerService {
 
     public ApiResult selectByPrimaryKey(Integer branchPowerId);
 
-    public ApiResult selectByEntity(HourlyPower hourlyPower);
+    public BranchPower selectByEntity(HourlyPower hourlyPower);
 
     public ApiResult deleteByPrimaryKey(Integer branchPowerId);
 
-    public ApiResult update(BranchPower branchPower);
+    public ApiResult update(Integer enterpriseId);
 
     public ApiResult insert(Integer enterpriseId);
 }

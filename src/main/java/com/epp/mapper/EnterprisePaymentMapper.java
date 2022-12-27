@@ -17,10 +17,10 @@ public interface EnterprisePaymentMapper {
     int deleteByPrimaryKey(Integer enterprisePaymentId);
 
     @Insert("insert into enterprise_payment (enterprise_id,first_rate_payment,second_rate_payment" +
-            ",third_rate_payment,sum_payment,year,month,status) " +
+            ",third_rate_payment,sum_payment,year,month,status,counted) " +
             "values (#{enterpriseId,jdbcType=INTEGER},#{firstRatePayment,jdbcType=DOUBLE},#{secondRatePayment,jdbcType=DOUBLE}," +
-            "#{thirdRatePayment,jdbcType=DOUBLE},#{sumRatePayment,jdbcType=DOUBLE},#{year,jdbcType=INTEGER}," +
-            "#{month,jdbcType=INTEGER},#{status,jdbcType=INTEGER})")
+            "#{thirdRatePayment,jdbcType=DOUBLE},#{sumPayment,jdbcType=DOUBLE},#{year,jdbcType=INTEGER}," +
+            "#{month,jdbcType=INTEGER},#{status,jdbcType=INTEGER},#{counted,jdbcType=DOUBLE})")
     int insert(EnterprisePayment record);
 
 //    int insertSelective(EnterprisePayment record);
@@ -32,10 +32,13 @@ public interface EnterprisePaymentMapper {
             " where enterprise_payment_id = #{enterprisePaymentId,jdbcType=INTEGER}")
     EnterprisePayment selectByPrimaryKey(Integer enterprisePaymentId);
 
-    @Select(" select  " +
-            "from enterprise_payment " +
+    @Select("select * from enterprise_payment where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and year = #{year,jdbcType=INTEGER}" +
+            " and month = #{month,jdbcType=INTEGER}")
+    EnterprisePayment selectByEntity(@Param("enterpriseId") Integer enterpriseId,@Param("year") Integer year,@Param("month") Integer month);
+
+    @Select(" select * from enterprise_payment " +
             " where enterprise_id = #{enterpriseId,jdbcType=INTEGER}")
-    EnterprisePayment selectByEnterpriseId(Integer enterpriseId);
+    List<EnterprisePayment> selectByEnterpriseId(Integer enterpriseId);
 
     @Select("select * from enterprise_payment")
     List<EnterprisePayment> selectAll();
@@ -50,15 +53,12 @@ public interface EnterprisePaymentMapper {
 
 //    int updateByPrimaryKeySelective(EnterprisePayment record);
 
-    @Update("update enterprise_payment " +
-            "set enterprise_id = #{enterpriseId,jdbcType=INTEGER}," +
-            " first_rate_payment = #{firstRatePayment,jdbcType=DOUBLE}," +
-            " second_rate_payment = #{secondRatePayment,jdbcType=DOUBLE}," +
-            ",third_rate_payment = #{thirdRatePayment,jdbcType=DOUBLE}," +
-            " sum_payment = #{sumRatePayment,jdbcType=DOUBLE}," +
-            " year = #{year,jdbcType=INTEGER}," +
-            " month = #{month,jdbcType=INTEGER}," +
-            " status = #{status,jdbcType=INTEGER} " +
-            " where enterprise_id = #{enterprise_id,jdbcType=INTEGER}")
+    @Update("update enterprise_payment set first_rate_payment = #{firstRatePayment,jdbcType=DOUBLE}," +
+            "second_rate_payment = #{secondRatePayment,jdbcType=DOUBLE}," +
+            "third_rate_payment = #{thirdRatePayment,jdbcType=DOUBLE}," +
+            "sum_payment = #{sumPayment,jdbcType=DOUBLE}," +
+            "status = #{status,jdbcType=INTEGER}, " +
+            "counted = #{counted,jdbcType=DOUBLE} " +
+            " where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER}")
     int updateByPrimaryKey(EnterprisePayment record);
 }

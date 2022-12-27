@@ -22,7 +22,7 @@ public interface EnterpriseDailyPowerMapper {
             "forth_period_power,daily_period_power,year,month,day)" +
             "values (#{enterpriseId,jdbcType=INTEGER},#{enterpriseAccount,jdbcType=INTEGER}," +
             "#{firstPeriodPower,jdbcType=DOUBLE},#{secondPeriodPower,jdbcType=DOUBLE},#{thirdPeriodPower,jdbcType=DOUBLE}," +
-            "#{forthPeriodPower,jdbcType=DOUBLE},#{dailyPower,jdbcType=DOUBLE},#{year,jdbcType=INTEGER},#{month,jdbcType=INTEGER}," +
+            "#{forthPeriodPower,jdbcType=DOUBLE},#{dailyPeriodPower,jdbcType=DOUBLE},#{year,jdbcType=INTEGER},#{month,jdbcType=INTEGER}," +
             "#{day,jdbcType=INTEGER})")
     int insert(EnterpriseDailyPower record);
 
@@ -41,8 +41,14 @@ public interface EnterpriseDailyPowerMapper {
 
     @Select("select * from enterprise_daily_power " +
             "where enterprise_id = #{enterpriseId,jdbcType=INTEGER} " +
+            "and year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER} and day = #{day,jdbcType=INTEGER}")
+    EnterpriseDailyPower selectByEntity(@Param("enterpriseId") Integer enterpriseId,@Param("year")Integer year,@Param("month")Integer month,@Param("day")Integer day);
+
+    @Select("select * from enterprise_daily_power " +
+            "where enterprise_id = #{enterpriseId,jdbcType=INTEGER} " +
             "and year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER}")
-    List<EnterpriseDailyPower> selectByEnterprise(Integer enterpriseId,Integer year,Integer month);
+    List<EnterpriseDailyPower> selectByMonth(@Param("enterpriseId") Integer enterpriseId,@Param("year")Integer year,@Param("month")Integer month);
+
 
 
     @Select("select * from enterprise_daily_power")
@@ -63,7 +69,7 @@ public interface EnterpriseDailyPowerMapper {
             "second_period_power = #{secondPeriodPower,jdbcType=DOUBLE}," +
             "third_period_power = #{thirdPeriodPower,jdbcType=DOUBLE}," +
             "forth_period_power = #{forthPeriodPower,jdbcType=DOUBLE}," +
-            "daily_period_power = #{dailyPower,jdbcType=DOUBLE} " +
+            "daily_period_power = #{dailyPeriodPower,jdbcType=DOUBLE} " +
             "where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and  year = #{year,jdbcType=INTEGER} " +
             "and month = #{month,jdbcType=INTEGER} and day = #{day,jdbcType=INTEGER}")
     int updateByPrimaryKey(EnterpriseDailyPower record);

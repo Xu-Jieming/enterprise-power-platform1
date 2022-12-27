@@ -32,7 +32,7 @@ public interface HourlyPowerMapper {
 
     @Select("select * from hourly_power" +
             " where enterprise_id = #{enterpriseId,jdbcType=INTEGER}")
-    HourlyPower selectByPrimaryKey(Integer enterpriseId);
+    List<HourlyPower> selectByPrimaryKey(Integer enterpriseId);
 
     @Select("select * from hourly_power")
     List<HourlyPower> selectAll();
@@ -53,7 +53,7 @@ public interface HourlyPowerMapper {
     @Update("update hourly_power set first_period_power = #{firstPeriodPower,jdbcType=DOUBLE}," +
             "second_period_power = #{secondPeriodPower,jdbcType=DOUBLE}," +
             "third_period_power = #{thirdPeriodPower,jdbcType=DOUBLE}," +
-            "forth_period_power = #{forthPeriodPower,jdbcType=DOUBLE}," +
+            "forth_period_power = #{forthPeriodPower,jdbcType=DOUBLE} " +
             "where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and branch_id = #{branchId,jdbcType=INTEGER} " +
             "and branch_set = #{branchSet,jdbcType=INTEGER} and year = #{year,jdbcType=INTEGER} " +
             "and month = #{month,jdbcType=INTEGER} and day = #{day,jdbcType=INTEGER}")

@@ -22,7 +22,9 @@ public interface EnterprisePowerService {
 
     public ApiResult deleteByPrimaryKey(Integer enterprisePowerId);
 
-    public ApiResult update(EnterprisePower enterprisePower);
+    public ApiResult selectByEntity(Integer enterprisePowerId);
+
+    public ApiResult update(Integer enterpriseId);
 
     public ApiResult insert(Integer enterpriseId);
 }

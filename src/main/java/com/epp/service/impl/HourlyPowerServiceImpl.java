@@ -35,7 +35,7 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
     private Calendar ca = Calendar.getInstance();
 
     private int day =ca.get(Calendar.DAY_OF_MONTH);//一年中的第几天
-    private int month =ca.get(Calendar.MONTH);//第几个月
+    private int month =ca.get(Calendar.MONTH)+1;//第几个月, Attention ! must add one 
     private int year =ca.get(Calendar.YEAR);//年份数值
 
     @Override
@@ -59,7 +59,7 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
 
     @Override
     public ApiResult selectByEnterpriseId(Integer enterpriseId) {
-        HourlyPower power = mapper.selectByPrimaryKey(enterpriseId);
+        List<HourlyPower> power = mapper.selectByPrimaryKey(enterpriseId);
         if(power != null){
             return ApiResultHandler.buildApiResult(200, "分时用能查询成功", power);
         }
@@ -88,6 +88,11 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
 
     @Override
     public ApiResult update(HourlyPower hourlyPower) {
+
+
+
+
+
 
 //        hourlyPower.setTime(year,month,day);
 

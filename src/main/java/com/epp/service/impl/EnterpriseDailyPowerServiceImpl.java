@@ -40,7 +40,7 @@ public class EnterpriseDailyPowerServiceImpl implements EnterpriseDailyPowerServ
     private final Calendar ca = Calendar.getInstance();
 
     private final int day =ca.get(Calendar.DAY_OF_MONTH);//一年中的第几天
-    private final int month =ca.get(Calendar.MONTH);//第几个月
+    private final int month =ca.get(Calendar.MONTH)+1;//第几个月, Attention ! must add one 
     private final int year =ca.get(Calendar.YEAR);//年份数值
 
     private double firstPeriodPower;
@@ -102,11 +102,11 @@ public class EnterpriseDailyPowerServiceImpl implements EnterpriseDailyPowerServ
     }
 
     @Override
-    public ApiResult update(EnterpriseDailyPower dailyPower) {
-
-        int enterpriseId = dailyPower.getEnterpriseId();
+    public ApiResult update(Integer enterpriseId) {
 
         List<HourlyPower> powerList = hourlyPowerMapper.selectByEntity(enterpriseId,year,month,day);//获取当天的分时用能
+
+        EnterpriseDailyPower dailyPower = mapper.selectByEntity(enterpriseId,year,month,day);
 
         for(HourlyPower power:powerList){//将每天不同支路的不同时间段进行累加
             firstPeriodPower+=power.getFirstPeriodPower();
@@ -120,7 +120,7 @@ public class EnterpriseDailyPowerServiceImpl implements EnterpriseDailyPowerServ
         dailyPower.setSecondPeriodPower(secondPeriodPower);
         dailyPower.setThirdPeriodPower(thirdPeriodPower);
         dailyPower.setForthPeriodPower(forthPeriodPower);
-        dailyPower.setDailyPower(dailyPeriodPower);
+        dailyPower.setDailyPeriodPower(dailyPeriodPower);
 
         int updateEnterpriseDailyPower = mapper.updateByPrimaryKey(dailyPower);
         if(updateEnterpriseDailyPower != 0){

@@ -19,7 +19,7 @@ public class EnterpriseDailyPower {
 
     private double forthPeriodPower;
 
-    private double dailyPower;
+    private double dailyPeriodPower;
 
     private Integer year;
 
@@ -102,12 +102,12 @@ public class EnterpriseDailyPower {
 
     public void setTime(Integer year,Integer month,Integer day){this.year = year;this.month = month;this.day = day;}
 
-    public double getDailyPower() {
-        return dailyPower;
+    public double getDailyPeriodPower() {
+        return dailyPeriodPower;
     }
 
-    public void setDailyPower(double dailyPower) {
-        this.dailyPower = dailyPower;
+    public void setDailyPeriodPower(double dailyPeriodPower) {
+        this.dailyPeriodPower = dailyPeriodPower;
     }
 
     public Integer getDailyPowerId() {

@@ -38,7 +38,9 @@ public interface EnterprisePowerMapper {
     @Select("select * from enterprise_power" +
             " where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and year = #{year,jdbcType=INTEGER}" +
             " and month = #{month,jdbcType=INTEGER}")
-    EnterprisePower selectByEnterprise(@Param("enterpriseId") Integer enterpriseId,@Param("year") Integer year,@Param("month") Integer month);
+    EnterprisePower selectByEntity(@Param("enterpriseId") Integer enterpriseId,@Param("year") Integer year,@Param("month") Integer month);
+
+
 
     @Select("select * from enterprise_power")
     List<EnterprisePower> selectAll();
@@ -50,8 +52,7 @@ public interface EnterprisePowerMapper {
     @Update(" update enterprise_power set first_rate_power = #{firstRatePower,jdbcType=DOUBLE}," +
             "second_rate_power = #{secondRatePower,jdbcType=DOUBLE}," +
             " third_rate_power = #{thirdRatePower,jdbcType=DOUBLE}," +
-            " sum_power = #{sumPower,jdbcType=DOUBLE}," +
-            " where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and year = #{year,jdbcType=INTEGER} " +
+            " sum_power = #{sumPower,jdbcType=DOUBLE} where enterprise_id = #{enterpriseId,jdbcType=INTEGER} and year = #{year,jdbcType=INTEGER} " +
             " and month = #{month,jdbcType=INTEGER}")
     int updateByPrimaryKey(EnterprisePower record);
 }

@@ -45,9 +45,9 @@ public class EnterprisePaymentController {
     }
 
     @PutMapping("/enterprisePayment")
-    public ApiResult update(@RequestBody EnterprisePayment enterprisePayment){
+    public ApiResult update(@RequestBody Integer enterpriseId){
         //System.out.println("修改企业费用");
-        return enterprisePaymentService.update(enterprisePayment);
+        return enterprisePaymentService.update(enterpriseId);
     }
 
     @PostMapping("/enterprisePayment")

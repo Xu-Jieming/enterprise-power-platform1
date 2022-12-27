@@ -13,13 +13,15 @@ public class EnterprisePayment {
 
     private  double thirdRatePayment;
 
-    private double sumRatePayment;
+    private double sumPayment;
 
     private Integer year;
 
     private Integer month;
 
     private Integer status;
+
+    private  double counted;
 
     public Integer getEnterprisePaymentId() {
         return enterprisePaymentId;
@@ -61,12 +63,12 @@ public class EnterprisePayment {
         this.thirdRatePayment = thirdRatePayment;
     }
 
-    public double getSumRatePayment() {
-        return sumRatePayment;
+    public double getSumPayment() {
+        return sumPayment;
     }
 
-    public void setSumRatePayment(double sumRatePayment) {
-        this.sumRatePayment = sumRatePayment;
+    public void setSumPayment(double sumPayment) {
+        this.sumPayment = sumPayment;
     }
 
     public Integer getYear() {
@@ -96,5 +98,6 @@ public class EnterprisePayment {
     public void setTime(Integer year,Integer month) {
         this.year = year;this.month = month;
     }
+
 
 }
