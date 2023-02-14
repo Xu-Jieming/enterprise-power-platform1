@@ -15,11 +15,6 @@ public class EnterpriseController {
     @Autowired
     private EnterpriseService enterpriseService;
 
-    @GetMapping("/enterprise")
-    public ApiResult selectAll(){
-        //System.out.println("查询全部");
-        return enterpriseService.selectAll();
-    }
 
     @GetMapping("/enterprise/{page}/{size}")
     public ApiResult selectAll(@PathVariable("page") Integer page,

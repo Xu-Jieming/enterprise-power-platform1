@@ -57,7 +57,7 @@ public class AlipayController2 {
         // 付款金额, 必填 单位元
         String total_amount = "0.01";  // 测试用 1分钱
         // 订单名称, 必填
-        String subject = "当月电费缴纳-付款用户[" + merchantUserId + "]";
+        String subject = "-付款用户[" + merchantUserId + "]";
         // 商品描述, 可空, 目前先用订单名称
         String body = subject;
 

@@ -5,6 +5,8 @@ import com.epp.pojo.ApiResult;
 import com.epp.pojo.Enterprise;
 import com.epp.pojo.EnterpriseDailyPower;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -14,7 +16,7 @@ import com.epp.pojo.EnterpriseDailyPower;
  */
 public interface EnterpriseService {
 
-    public ApiResult selectAll();
+    public List<Enterprise> selectAll();
 
     public ApiResult selectAll(Page<Enterprise> page);
 
