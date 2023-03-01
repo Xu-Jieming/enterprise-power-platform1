@@ -5,6 +5,8 @@ import com.epp.pojo.Admin;
 import com.epp.pojo.ApiResult;
 import com.epp.pojo.HourlyPower;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -24,9 +26,9 @@ public interface HourlyPowerService {
 
     public ApiResult deleteByPrimaryKey(Integer hourlyId);
 
-    public ApiResult update(HourlyPower hourlyPower);
+    public ApiResult update(List<HourlyPower> hourlyPowerList,Integer enterpriseId,Integer year,Integer month, Integer day);
 
-    public ApiResult insert(Integer enterpriseId);
+    public ApiResult insert(Integer enterpriseId,Integer year,Integer month, Integer day);
 
 
 

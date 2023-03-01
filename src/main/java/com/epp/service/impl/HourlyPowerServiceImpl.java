@@ -87,38 +87,37 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
     }
 
     @Override
-    public ApiResult update(HourlyPower hourlyPower) {
+    public ApiResult update(List<HourlyPower> hourlyPowerList,Integer enterpriseId,Integer year,Integer month, Integer day) {
 
+        int updateHourlyPower = 0;
 
+        for(HourlyPower hourlyPower : hourlyPowerList){
+            //这里添加修改hourlyPower的语句
+            updateHourlyPower  = mapper.updateByPrimaryKey(hourlyPower);
 
+            BranchSet branchSet = branchSetMapper.selectByEnterpriseId(enterpriseId);//获取当前的支路设定
 
+            if(hourlyPower.getBranchSet() == 1 && branchSet.getFirstBranchSet() != 1) {
 
+                return ApiResultHandler.buildApiResult(1000, "第一支路没有开启", updateHourlyPower);
 
-//        hourlyPower.setTime(year,month,day);
+            }else if(hourlyPower.getBranchSet() == 2 && branchSet.getSecondBranchSet() != 1){
 
-        int enterpriseId = hourlyPower.getEnterpriseId();
+                return ApiResultHandler.buildApiResult(1000, "第二支路没有开启", updateHourlyPower);
 
-        int updateHourlyPower = mapper.updateByPrimaryKey(hourlyPower);
+            }else if(hourlyPower.getBranchSet() == 3 && branchSet.getThirdBranchSet() != 1){
 
-        BranchSet branchSet = branchSetMapper.selectByEnterpriseId(enterpriseId);//获取当前的支路设定
+                return ApiResultHandler.buildApiResult(1000, "第三支路没有开启", updateHourlyPower);
 
-        if(hourlyPower.getBranchSet() == 1 && branchSet.getFirstBranchSet() != 1) {
+            }else if(hourlyPower.getBranchSet() == 4 && branchSet.getForthBranchSet() != 1){
 
-            return ApiResultHandler.buildApiResult(1000, "第一支路没有开启", updateHourlyPower);
+                return ApiResultHandler.buildApiResult(1000, "第四支路没有开启", updateHourlyPower);
 
-        }else if(hourlyPower.getBranchSet() == 2 && branchSet.getSecondBranchSet() != 1){
-
-            return ApiResultHandler.buildApiResult(1000, "第二支路没有开启", updateHourlyPower);
-
-        }else if(hourlyPower.getBranchSet() == 3 && branchSet.getThirdBranchSet() != 1){
-
-            return ApiResultHandler.buildApiResult(1000, "第三支路没有开启", updateHourlyPower);
-
-        }else if(hourlyPower.getBranchSet() == 4 && branchSet.getForthBranchSet() != 1){
-
-            return ApiResultHandler.buildApiResult(1000, "第四支路没有开启", updateHourlyPower);
-
+            }
         }
+
+
+
 
         if(updateHourlyPower != 0){
             return ApiResultHandler.buildApiResult(200, "修改成功", updateHourlyPower);
@@ -127,7 +126,7 @@ public class HourlyPowerServiceImpl implements HourlyPowerService {
     }
 
     @Override
-    public ApiResult insert(Integer enterpriseId) {
+    public ApiResult insert(Integer enterpriseId,Integer year,Integer month, Integer day) {
 
         int insertHourlyPower = 0;
 

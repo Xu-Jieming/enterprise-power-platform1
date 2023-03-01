@@ -39,6 +39,11 @@ public interface TiredRateMapper {
             " where rate_id = #{rateId,jdbcType=INTEGER}")
     TiredRate selectByPrimaryKey(Integer rateId);
 
+    @Select("select * from tired_rate" +
+            " where year = #{year} and month = #{month}")
+    TiredRate selectByDate(@Param("year") Integer year,@Param("month") Integer month);
+
+
 
     @Select("select * from tired_rate" +
             " where year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER}")

@@ -22,7 +22,7 @@ public interface EnterpriseDailyPowerService {
 
     public ApiResult deleteByPrimaryKey(Integer enterprisePowerId);
 
-    public ApiResult update(Integer enterpriseId);
+    public ApiResult update(Integer enterpriseId,Integer year,Integer month, Integer day);
 
-    public ApiResult insert(Integer enterpriseId);
+    public ApiResult insert(Integer enterpriseId,Integer year,Integer month, Integer day);
 }

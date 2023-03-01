@@ -9,11 +9,11 @@ public class Enterprise {
 
     private String email;
 
-    private Integer tel;
+    private String tel;
 
     private Integer account;
 
-    private String introdution;
+    private String introduction;
 
     public Integer getEnterpriseId() {
         return enterpriseId;
@@ -39,11 +39,11 @@ public class Enterprise {
         this.email = email == null ? null : email.trim();
     }
 
-    public Integer getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(Integer tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 
@@ -55,11 +55,11 @@ public class Enterprise {
         this.account = account;
     }
 
-    public String getIntrodution() {
-        return introdution;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setIntrodution(String introdution) {
-        this.introdution = introdution == null ? null : introdution.trim();
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction == null ? null : introduction.trim();
     }
 }

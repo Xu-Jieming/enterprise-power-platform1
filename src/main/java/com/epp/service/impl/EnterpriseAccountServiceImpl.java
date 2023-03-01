@@ -39,13 +39,9 @@ public class EnterpriseAccountServiceImpl implements EnterpriseAccountService {
     }
 
     @Override
-    public ApiResult selectByEnterpriseId(Integer enterpriseId) {
+    public EnterpriseAccount selectByEnterpriseId(Integer enterpriseId) {
         EnterpriseAccount enterpriseAccount = accountMapper.selectByEnterpriseId(enterpriseId);
-        if (enterpriseAccount != null) {
-            return ApiResultHandler.buildApiResult(200, "存款查询成功", enterpriseAccount);
-        }
-        return ApiResultHandler.buildApiResult(400, "查询失败", null);
-
+        return enterpriseAccount;
     }
 
     @Override

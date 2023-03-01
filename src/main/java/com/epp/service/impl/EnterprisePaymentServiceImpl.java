@@ -73,14 +73,10 @@ public class EnterprisePaymentServiceImpl implements EnterprisePaymentService {
     }
 
     @Override
-    public ApiResult update(Integer enterpriseId) {
+    public ApiResult update(Integer enterpriseId,Integer year,Integer month) {
 
         EnterprisePayment enterprisePayment = mapper.selectByEntity(enterpriseId,year,month);
-
-
-
         TiredRate tiredRate = tiredRateMapper.selectByTime(year,month);
-
         EnterprisePower enterprisePower = powerMapper.selectByEntity(enterpriseId,year,month);//获取当月电费情况
 
 
@@ -101,7 +97,7 @@ public class EnterprisePaymentServiceImpl implements EnterprisePaymentService {
     }
 
     @Override
-    public ApiResult insert(Integer enterpriseId) {
+    public ApiResult insert(Integer enterpriseId,Integer year,Integer month) {
 
         EnterprisePayment enterprisePayment = new EnterprisePayment();
         enterprisePayment.setEnterpriseId(enterpriseId);
