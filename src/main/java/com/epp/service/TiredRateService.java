@@ -25,6 +25,4 @@ public interface TiredRateService {
     public ApiResult update(TiredRate tiredRate);
 
     public ApiResult insert(TiredRate tiredRate);
-
-    public TiredRate selectByDate(Integer year,Integer month);
 }

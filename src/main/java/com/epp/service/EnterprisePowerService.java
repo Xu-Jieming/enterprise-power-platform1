@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.epp.pojo.ApiResult;
 import com.epp.pojo.EnterprisePower;
 
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  *
@@ -24,9 +22,9 @@ public interface EnterprisePowerService {
 
     public ApiResult deleteByPrimaryKey(Integer enterprisePowerId);
 
-    public EnterprisePower selectByEntity(Integer enterprisePowerId,Integer year,Integer month);
+    public ApiResult selectByEntity(Integer enterprisePowerId);
 
-    public ApiResult update(Integer enterpriseId,Integer year,Integer month);
+    public ApiResult update(Integer enterpriseId);
 
-    public ApiResult insert(Integer enterpriseId,Integer year,Integer month);
+    public ApiResult insert(Integer enterpriseId);
 }

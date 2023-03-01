@@ -40,10 +40,14 @@ public class EnterpriseDailyPowerServiceImpl implements EnterpriseDailyPowerServ
     private final Calendar ca = Calendar.getInstance();
 
     private final int day =ca.get(Calendar.DAY_OF_MONTH);//一年中的第几天
-    private final int month =ca.get(Calendar.MONTH)+1;//第几个月, Attention ! must add one
+    private final int month =ca.get(Calendar.MONTH)+1;//第几个月, Attention ! must add one 
     private final int year =ca.get(Calendar.YEAR);//年份数值
 
-
+    private double firstPeriodPower;
+    private double secondPeriodPower;
+    private double thirdPeriodPower;
+    private double forthPeriodPower;
+    private double dailyPeriodPower;
 
 
 
@@ -98,14 +102,10 @@ public class EnterpriseDailyPowerServiceImpl implements EnterpriseDailyPowerServ
     }
 
     @Override
-    public ApiResult update(Integer enterpriseId,Integer year,Integer month, Integer day) {
-         double firstPeriodPower = 0;
-         double secondPeriodPower = 0;
-         double thirdPeriodPower = 0;
-         double forthPeriodPower = 0;
-         double dailyPeriodPower = 0;
+    public ApiResult update(Integer enterpriseId) {
 
         List<HourlyPower> powerList = hourlyPowerMapper.selectByEntity(enterpriseId,year,month,day);//获取当天的分时用能
+
         EnterpriseDailyPower dailyPower = mapper.selectByEntity(enterpriseId,year,month,day);
 
         for(HourlyPower power:powerList){//将每天不同支路的不同时间段进行累加
@@ -123,8 +123,6 @@ public class EnterpriseDailyPowerServiceImpl implements EnterpriseDailyPowerServ
         dailyPower.setDailyPeriodPower(dailyPeriodPower);
 
         int updateEnterpriseDailyPower = mapper.updateByPrimaryKey(dailyPower);
-
-
         if(updateEnterpriseDailyPower != 0){
             return ApiResultHandler.buildApiResult(200, "修改成功", updateEnterpriseDailyPower);
         }
@@ -133,7 +131,7 @@ public class EnterpriseDailyPowerServiceImpl implements EnterpriseDailyPowerServ
     }
 
     @Override
-    public ApiResult insert(Integer enterpriseId,Integer year,Integer month, Integer day) {
+    public ApiResult insert(Integer enterpriseId) {
 
         EnterpriseDailyPower dailyPower = new EnterpriseDailyPower();
 

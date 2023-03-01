@@ -25,7 +25,7 @@ public interface BranchPowerService {
 
     public ApiResult deleteByPrimaryKey(Integer branchPowerId);
 
-    public ApiResult update(Integer enterpriseId,Integer year,Integer month, Integer day);
+    public ApiResult update(Integer enterpriseId);
 
-    public ApiResult insert(Integer enterpriseId,Integer year,Integer month, Integer day);
+    public ApiResult insert(Integer enterpriseId);
 }

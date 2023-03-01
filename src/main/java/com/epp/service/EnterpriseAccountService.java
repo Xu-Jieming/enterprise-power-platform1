@@ -16,7 +16,7 @@ public interface EnterpriseAccountService {
 
     public ApiResult selectAll();
 
-    public EnterpriseAccount selectByEnterpriseId(Integer enterpriseId);
+    public ApiResult selectByEnterpriseId(Integer enterpriseId);
 
     public ApiResult deleteByAccount(Integer enterpriseId);
 

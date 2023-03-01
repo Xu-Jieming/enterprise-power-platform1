@@ -50,12 +50,6 @@ public class TiredRateServiceImpl implements TiredRateService{
     }
 
     @Override
-    public TiredRate selectByDate(Integer year, Integer month) {
-        TiredRate tiredRate = mapper.selectByDate(year,month);
-        return tiredRate;
-    }
-
-    @Override
     public ApiResult selectByPrimaryKey(Integer tiredRateId) {
         TiredRate tiredRate = mapper.selectByPrimaryKey(tiredRateId);
         if(tiredRate != null){
@@ -95,6 +89,4 @@ public class TiredRateServiceImpl implements TiredRateService{
         return ApiResultHandler.buildApiResult(400, "添加失败", null);
 
     }
-
-
 }

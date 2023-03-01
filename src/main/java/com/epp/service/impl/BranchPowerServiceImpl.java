@@ -98,7 +98,7 @@ public class BranchPowerServiceImpl implements BranchPowerService {
     }
 
     @Override
-    public ApiResult update(Integer enterpriseId,Integer year,Integer month, Integer day) {
+    public ApiResult update(Integer enterpriseId) {
 
         BranchPower branchPower = mapper.selectByEntity(enterpriseId,year,month,day);//一个企业的一天只有一个
 
@@ -141,7 +141,7 @@ public class BranchPowerServiceImpl implements BranchPowerService {
     }
 
     @Override
-    public ApiResult insert(Integer enterpriseId,Integer year,Integer month, Integer day) {
+    public ApiResult insert(Integer enterpriseId) {
 
         BranchSet branchSet = branchSetMapper.selectByEnterpriseId(enterpriseId);//获取当前的支路设定
 

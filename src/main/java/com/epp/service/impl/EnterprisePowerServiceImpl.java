@@ -85,10 +85,13 @@ public class EnterprisePowerServiceImpl implements EnterprisePowerService {
     }
 
     @Override
-    public EnterprisePower selectByEntity(Integer enterpriseId,Integer year,Integer month) {
+    public ApiResult selectByEntity(Integer enterpriseId) {
 
-        EnterprisePower power = mapper.selectByEntity(enterpriseId,year,month);
-        return power;
+        EnterprisePower powerList = mapper.selectByEntity(enterpriseId,year,month);
+        if(powerList != null){
+            return ApiResultHandler.buildApiResult(200, "企业用能查询成功", powerList);
+        }
+        return ApiResultHandler.buildApiResult(400, "企业用能查询失败", null);
     }
 
 
@@ -103,7 +106,7 @@ public class EnterprisePowerServiceImpl implements EnterprisePowerService {
     }
 
     @Override
-    public ApiResult update(Integer enterpriseId,Integer year,Integer month) {
+    public ApiResult update(Integer enterpriseId) {
 
         EnterprisePower monthlyPower = mapper.selectByEntity(enterpriseId,year,month);
 
@@ -113,11 +116,11 @@ public class EnterprisePowerServiceImpl implements EnterprisePowerService {
         double sum = 0;
         //获取整个月的量
         List<EnterpriseDailyPower> powerList =  dailyMapper.selectByMonth(enterpriseId,year, month);
-        //System.out.println(powerList);
+        System.out.println(powerList);
         for(EnterpriseDailyPower power:powerList){
             sum += power.getDailyPeriodPower();
         }
-       // System.out.println(tiredRates.getSecondRateInterval());不要忘记添加数据后，要记得把阶梯收费给添加进去
+
         monthlyPower.setSumPower(sum);//先把总量给放进去
         //然后把这个月的阶梯收费给算出来
         if(sum <= tiredRates.getSecondRateInterval()){
@@ -141,7 +144,7 @@ public class EnterprisePowerServiceImpl implements EnterprisePowerService {
     }
 
     @Override
-    public ApiResult insert(Integer enterpriseId,Integer year,Integer month) {
+    public ApiResult insert(Integer enterpriseId) {
 
         EnterprisePower monthlyPower = new EnterprisePower();
 

@@ -27,17 +27,20 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     private EnterpriseMapper mapper;
 
     @Override
-    public List<Enterprise> selectAll() {
-        List<Enterprise> enterpriseList = mapper.selectAll();
-        return enterpriseList;
+    public ApiResult selectAll() {
+        List<Enterprise> powerList = mapper.selectAll();
+        if(powerList != null){
+            return ApiResultHandler.buildApiResult(200, "所有企业用能查询成功", powerList);
+        }
+        return ApiResultHandler.buildApiResult(400, "所有企业用能查询失败", null);
 
     }
 
     @Override
     public ApiResult selectAll(Page<Enterprise> page) {
-        IPage<Enterprise> enterpriseList = mapper.selectAll(page);
-        if(enterpriseList != null){
-            return ApiResultHandler.buildApiResult(200, "分页查询所有企业用能成功", enterpriseList);
+        IPage<Enterprise> powerList = mapper.selectAll(page);
+        if(powerList != null){
+            return ApiResultHandler.buildApiResult(200, "分页查询所有企业用能成功", powerList);
         }
         return ApiResultHandler.buildApiResult(400, "分页查询所有企业用能失败", null);
 
@@ -75,8 +78,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
-    public ApiResult update(Enterprise enterprise) {
-        int updateEnterprise = mapper.updateByPrimaryKey(enterprise);
+    public ApiResult update(Enterprise branchPower) {
+        int updateEnterprise = mapper.updateByPrimaryKey(branchPower);
         if(updateEnterprise != 0){
             return ApiResultHandler.buildApiResult(200, "修改成功", updateEnterprise);
         }
@@ -85,8 +88,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
-    public ApiResult insert(Enterprise enterprise) {
-        int insertEnterprise = mapper.insert(enterprise);
+    public ApiResult insert(Enterprise branchPower) {
+        int insertEnterprise = mapper.insert(branchPower);
         if(insertEnterprise != 0){
             return ApiResultHandler.buildApiResult(200, "添加成功", insertEnterprise);
         }

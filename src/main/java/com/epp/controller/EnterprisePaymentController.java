@@ -44,15 +44,15 @@ public class EnterprisePaymentController {
         return enterprisePaymentService.deleteByPrimaryKey(enterprisePaymentId);
     }
 
-/*    @PutMapping("/enterprisePayment")
+    @PutMapping("/enterprisePayment")
     public ApiResult update(@RequestBody Integer enterpriseId){
         //System.out.println("修改企业费用");
         return enterprisePaymentService.update(enterpriseId);
-    }*/
+    }
 
-/*    @PostMapping("/enterprisePayment")
+    @PostMapping("/enterprisePayment")
     public ApiResult insert(@RequestBody EnterprisePayment enterprisePayment){
         //System.out.println("添加企业费用");
         return enterprisePaymentService.insert(enterprisePayment.getEnterpriseId());
-    }*/
+    }
 }
